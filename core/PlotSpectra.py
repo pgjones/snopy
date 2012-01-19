@@ -22,4 +22,23 @@ class PlotSpectra( object ):
         ROOT.gStyle.SetTitleSize( 0.06, "xyz" )
         ROOT.gStyle.SetOptStat(0)
         
-        
+        self._Canvas = ROOT.TCanvas()
+        frameHist = SpectrumUtil.RawSpectrum( "TEMP" )
+        frameHist.Draw()
+        frameHist.GetYaxis().SetRangeUser( 1e-1, 1e14 )
+        frameHist.GetXaxis().SetRangeUser( eLow, eHigh )
+        frameHist.GetXaxis().SetTitle( "Energy [MeV]" )
+        frameHist.GetYaxis().SetTitle( "Events per " + str( (SpectrumUtil.HighBin - SpectrumUtil.LowBin) / SpectrumUtil.NBins ) + " MeV" )
+        # Create summed background and bg + signal histograms
+        self._SumBGHist = SpectrumUtil.RawSpectrum( "Sum BG" )
+        self._SumBGSigHist = SpectrumUtil.RawSpectrum( "Sum BG + Signal" )
+        # Draw backgrounds and signal and summed histograms
+        for bg in self._Simulation.GetBackgrounds():
+            hist = bg.GetHist()
+            hist.Draw("SAME")
+            self._SumBGHist.Add( hist )
+        self._SumBGSigHist.Add( sumBGHist )
+        signalHist = self._Simulation.GetSignal().GetHist()
+        signalHist.Draw("SAME")
+        self._SumBGSigHist.Add( signalHist )
+        return self._Canvas

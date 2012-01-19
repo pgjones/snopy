@@ -8,15 +8,16 @@ class Spectra( object ):
         """ Default constructor, just sets up a generic spectra."""
         self._PreHist = None
         self._PostHist = None
-        self._SpectraName = name # Each Spectra type must have a unique name
-        self._PileupLevel = 0    # Pileup backgrounds must be considered specially, 0 is no pileup, 1 single pileup, 2 double etc... 
+        self._Name = name # Each Spectra type must have a unique name
+        self._ScintMass = 1.0 # kg
+        self._NdMass = 1.0 # kg
         return
     def __eq__( self, rhs ):
         """ Check if two spectra are identical, uses the unique spectra name."""
-        return type( self ) == type( rhs ) and self._SpectraName == rhs._SpectraName
+        return type( self ) == type( rhs ) and self._Name == rhs._Name
     def GetName( self ):
         """ Return the spectra unique name."""
-        return self._SpectraName
+        return self._Name
     def GetHist( self ):
         """ Return the spectra histogram, for processing etc..."""
         if self._PostHist = None:
@@ -30,6 +31,13 @@ class Spectra( object ):
     def GetActivity( self ):
         """ Return the spectra pre processed activity per year."""
         return 0.0
+    def Initialise( self, scintMass, ndMass ):
+        """ Set the PreHist spectra to a years unprocessed events, default fill."""
+        self._ScintMass = scintMass
+        self._NdMass = ndMass
+        self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
+        self._PostHist = None
+        return
 
 class LoadedSpectra( Spectra ):
     """ Spectra loaded from a file instead of generated."""

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
 
+kns = 1e-9 # ns in seconds
+
 def Pileup( backgrounds, pileupWindow, rejection ):
     """ Pileup all the backgrounds together within the pileup window whilst rejecting events."""
     assert( isinstance( rejection, SignalRejection.SignalRejection ) )
@@ -25,20 +27,22 @@ def Pileup( backgrounds, pileupWindow, rejection ):
 
 def PileupActivity( bg1, bg2, pileupWindow ):
     """ Return the number of events per year for single pileup."""
+    global kns
     assert( isinstance( bg1, Spectra.Spectra ) )
     assert( isinstance( bg2, Spectra.Spectra ) )
-    return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow / YearToSeconds(), 1 )
+    return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow * kns / YearToSeconds(), 1 )
 
 def PileupActivity( bg1, bg2, bg3, pileupWindow ):
     """ Return the number of events per year for double pileup."""
+    global kns
     assert( isinstance( bg1, Spectra.Spectra ) )
     assert( isinstance( bg2, Spectra.Spectra ) )
     assert( isinstance( bg3, Spectra.Spectra ) )
     if bg2 == bg3:
-        return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow / YearToSeconds(), 2 )
+        return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow * kns / YearToSeconds(), 2 )
     else:
-        return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow / YearToSeconds(), 1 ) \
-                                 * MathUtil.PoissonValue( bg3.GetActivity() * pileupWindow / YearToSeconds(), 1 )
+        return bg1.GetActivity() * MathUtil.PoissonValue( bg2.GetActivity() * pileupWindow * kns / YearToSeconds(), 1 ) \
+                                 * MathUtil.PoissonValue( bg3.GetActivity() * pileupWindow * kns / YearToSeconds(), 1 )
     return
 
 def YearToSeconds():
