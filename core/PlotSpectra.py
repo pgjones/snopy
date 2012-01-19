@@ -1,13 +1,18 @@
 #!/usr/bin/env python 
 # Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
+# Plots the spectra in a simulation
+import Simulation
+import ROOT
+import SpectrumUtil
 
 class PlotSpectra( object ):
     """ Plots the spectra in a simulation under varying options."""
     def __init__( self, simulation ):
         """ Construct with a simulation of spectra."""
-        if not isinstance( simulation, Simulation.Simulation ):
+        if isinstance( simulation, Simulation.Simulation ):
+            self._Simulation =  simulation   
+        else:
             print "Simultion is of incorrect type:", type( simulation )
-        self._Simulation =  simulation
         return
     def Plot( self, numYears, eLow, eHigh ):
         """ Plot ths spectra in the simulation."""
@@ -23,12 +28,12 @@ class PlotSpectra( object ):
         ROOT.gStyle.SetOptStat(0)
         
         self._Canvas = ROOT.TCanvas()
-        frameHist = SpectrumUtil.RawSpectrum( "TEMP" )
-        frameHist.Draw()
-        frameHist.GetYaxis().SetRangeUser( 1e-1, 1e14 )
-        frameHist.GetXaxis().SetRangeUser( eLow, eHigh )
-        frameHist.GetXaxis().SetTitle( "Energy [MeV]" )
-        frameHist.GetYaxis().SetTitle( "Events per " + str( (SpectrumUtil.HighBin - SpectrumUtil.LowBin) / SpectrumUtil.NBins ) + " MeV" )
+        self._FrameHist = SpectrumUtil.RawSpectrum( "TEMP" )
+        self._FrameHist.Draw()
+        self._FrameHist.GetYaxis().SetRangeUser( 1e-1, 1e14 )
+        self._FrameHist.GetXaxis().SetRangeUser( eLow, eHigh )
+        self._FrameHist.GetXaxis().SetTitle( "Energy [MeV]" )
+        self._FrameHist.GetYaxis().SetTitle( "Events per " + str( (SpectrumUtil.HighBin - SpectrumUtil.LowBin) / SpectrumUtil.NBins ) + " MeV" )
         # Create summed background and bg + signal histograms
         self._SumBGHist = SpectrumUtil.RawSpectrum( "Sum BG" )
         self._SumBGSigHist = SpectrumUtil.RawSpectrum( "Sum BG + Signal" )
@@ -37,8 +42,9 @@ class PlotSpectra( object ):
             hist = bg.GetHist()
             hist.Draw("SAME")
             self._SumBGHist.Add( hist )
-        self._SumBGSigHist.Add( sumBGHist )
+        self._SumBGSigHist.Add( self._SumBGHist )
         signalHist = self._Simulation.GetSignal().GetHist()
         signalHist.Draw("SAME")
         self._SumBGSigHist.Add( signalHist )
+        self._Canvas().cd().SetLogy()
         return self._Canvas

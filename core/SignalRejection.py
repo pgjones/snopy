@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
+# All events can be rejected as pileup, these classes return the fraction that survive.
+import Spectra
+import SpectrumUtil
 
 class SignalRejection( object ):
     """ Signal Rejection base class. These classes apply rejection to the no pileup spectra and return the survival factor

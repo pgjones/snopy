@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
+# Base class for backgrounds (not signals)
+import Spectra
+import math
 
-class Background( Spectra ):
+class Background( Spectra.Spectra ):
     """ Base class for background spectras."""
     kU = 1.66e-27 # Atomic mass unit Kg
 
@@ -25,10 +28,10 @@ class Background( Spectra ):
     def GetActivity( self ):
         """ Activity per year."""
         activity = self._ScintMass * self._ScintTargetFraction + self._NdMass * self._NdTargetFraction
-        activity *= math.log(2) / ( kU * self._AtomicMass * self._HalfLife )
+        activity *= math.log(2) / ( Background.kU * self._AtomicMass * self._HalfLife )
         return activity
 
-class SolarBackground( Spectra ):
+class SolarBackground( Spectra.Spectra ):
     """ Base class for solar backgrounds. """
     def __init__( self, name ):
         """ Constructor, requires a unique name from the derived class."""

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
+# All backgrounds/signals are a spectra object, this objects holds the actual histograms
+import SpectrumUtil
 
 class Spectra( object ):
     """ All backgrounds and signal types derive from this. This contains the spectra (energy histogram) for the background or signal."""
@@ -11,6 +13,7 @@ class Spectra( object ):
         self._Name = name # Each Spectra type must have a unique name
         self._ScintMass = 1.0 # kg
         self._NdMass = 1.0 # kg
+        self._PileupLevel = 0 # No pileup, single pileup or double pileup 
         return
     def __eq__( self, rhs ):
         """ Check if two spectra are identical, uses the unique spectra name."""
@@ -18,9 +21,16 @@ class Spectra( object ):
     def GetName( self ):
         """ Return the spectra unique name."""
         return self._Name
+    def GetPileupLevel( self ):
+        """ Return the pileup level."""
+        return self._PileupLevel
+    def SetPileupLevel( self, pileupLevel ):
+        """ Set the pileup level."""
+        self._PileupLevel = pileupLevel
+        return
     def GetHist( self ):
         """ Return the spectra histogram, for processing etc..."""
-        if self._PostHist = None:
+        if self._PostHist is None:
             return self._PreHist
         else:
             return self._PostHist
@@ -35,8 +45,9 @@ class Spectra( object ):
         """ Set the PreHist spectra to a years unprocessed events, default fill."""
         self._ScintMass = scintMass
         self._NdMass = ndMass
-        self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
-        self._PostHist = None
+        if self._PreHist is None and self._PostHist is None:
+            self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
+            self._PostHist = None
         return
 
 class LoadedSpectra( Spectra ):
@@ -52,12 +63,12 @@ class LoadedSpectra( Spectra ):
             print "Erroneous pileup level given, construction failed."
             return
         self._PileupLevel = pileupLevel
-        if spectraType is MCType:
-            self._PreHist = #Convert
-        elif spectraType is EVType:
-            self._PostHist = #Convert
-        else:
-            print "Error wrong or no spectraType given."
+        #if spectraType is MCType:
+        #    self._PreHist = #Convert
+        #elif spectraType is EVType:
+        #    self._PostHist = #Convert
+        #else:
+        #    print "Error wrong or no spectraType given."
         self._Activity = activity
         return
     def GetActivity( self ):

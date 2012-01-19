@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 # Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
 # All Nd backgrounds bar the decay chains
-
-# Register the spectra types in this file
-SpectraTypes.SpectraTypes["150Nd2v"] = B150Nd
-SpectraTypes.SpectraTypes["144Nd"] = B144Nd
-SpectraTypes.SpectraTypes["176Lu"] = B176Lu
-SpectraTypes.SpectraTypes["138La"] = B138La
-SpectraTypes.SpectraTypes["147Sm"] = B147Sm
-SpectraTypes.SpectraTypes["148Sm"] = B148Sm
-SpectraTypes.SpectraTypes["227Ac"] = B227Ac
-SpectraTypes.SpectraTypes["235U"]  = B235U
+import Background
+import SpectrumUtil
 
 class B150Nd( Background.Background ):
     """ Neodymium 150 background definition."""

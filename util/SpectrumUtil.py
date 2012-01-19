@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-from ROOT import TH1D
 # Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
+from ROOT import TH1D
+import math
 
 NBins   = 600 # Number of histogram bins
 LowBin  = 0.0 # Low end of the histogram energy domain [MeV]
@@ -20,16 +21,16 @@ def BetaDecayWithGamma( QBeta,
                         QGamma,
                         numEvents ):
     """ Convinience function to produce the beta + gamma spectrum. """
-    hist = BetaDecay( spectrumHist, QBeta, numEvents )
-    hist = CoincidentGamma( spectrumHist, QGamma, 1.0 ) # Always get a gamma with the beta (assumed usage)
+    hist = BetaDecay( QBeta, numEvents )
+    hist = CoincidentGamma( hist, QGamma, 1.0 ) # Always get a gamma with the beta (assumed usage)
     return hist
 
 def AlphaDecayWithGamma( QAlpha,
                          QGamma,
                          numEvents ):
     """ Convinience function to produce the alpha + gamma spectrum. """
-    hist = AlphaDecay( spectrumHist, QAlpha, numEvents )
-    hist = CoincidentGamma( spectrumHist, QGamma, 1.0 ) # Always get a gamma with the alpha (assumed usage)
+    hist = AlphaDecay( QAlpha, numEvents )
+    hist = CoincidentGamma( hist, QGamma, 1.0 ) # Always get a gamma with the alpha (assumed usage)
     return hist
 
 def BetaDecay( Q,
@@ -46,6 +47,24 @@ def BetaDecay( Q,
                 binFraction = 1.0 - ( T - Q ) / hist.GetBinWidth( iBin )
                 T = Q
             Ne = binFraction * math.sqrt( T**2 + 2 * T * ElectronMass ) * ( Q - T )**2 * ( T + ElectronMass )
+        hist.SetBinContent( iBin, Ne )
+    hist.Scale( numEvents / hist.GetSumOfWeights() )
+    return hist
+
+def DoubleBetaDecay( Q,
+               numEvents ):
+    """ Produces a histogram filled with numEvents double beta decay events with end point Q."""
+    global NBins, ElectronMass
+    hist = RawSpectrum( "Beta" )
+    for iBin in range( 1, NBins + 1 ):
+        T = hist.GetBinCenter( iBin )
+        Ne = 0
+        if( T <= Q + hist.GetBinWidth( iBin ) ):
+            binFraction = 1.0 # Fraction of bin to fill
+            if( T > Q ): # Allow for bin widths
+                binFraction = 1.0 - ( T - Q ) / hist.GetBinWidth( iBin )
+                T = Q
+            Ne = binFraction * ( Q - T )**5 * ( 1 + 2 * T + 4 * T**2 / 3 + T**3 / 3 + T**4 / 30 )
         hist.SetBinContent( iBin, Ne )
     hist.Scale( numEvents / hist.GetSumOfWeights() )
     return hist

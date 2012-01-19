@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
+# Applies the energy resolution smearing
+import Spectra
+import SpectrumUtil
+import math
 
 class EnergyResolution( object ):
     """ Energy Resolution base class. These classes apply smearing to the spectra to account for the energy resolution."""
@@ -7,14 +11,14 @@ class EnergyResolution( object ):
         """ Process the spectra by convolving in the energy resolution. """
         assert( isinstance( spectra, Spectra.Spectra ) )
         hist = spectra.GetHist()
-        convolved = SpectraUtil.RawHist( hist.GetName() )
+        convolved = SpectrumUtil.RawSpectrum( hist.GetName() )
         # C( b1 ) = sum( b2 ) h( b2 ) * g[b2]( b1 - b2 )
         # Wish to convolve h with a gaussian which has a sigma dependent on b2, i.e. the energy in h
         for b1 in range( 1, SpectrumUtil.NBins + 1 ):
             h = 0
             for b2 in range( 1, SpectrumUtil.NBins + 1 ):
                 sigma = self.GetSigma( hist.GetXaxis().GetBinCenter( b2 ) ) # In MeV
-                c = sigma / SpectrumUtil.BinWidth # Convert to a sigma in number of bins from MeV
+                c = sigma / hist.GetBinWidth( b1 ) # Convert to a sigma in number of bins from MeV
                 N = 1.0 / ( c * math.sqrt( 2.0 * math.pi ) ) # Normalisation factor
                 h = h + hist.GetBinContent( b2 ) * N * math.exp( -( b1 - b2 )**2 / ( 2.0 * c**2 ) )
             convolved.SetBinContent( b1, h )
@@ -37,7 +41,7 @@ class Nhit( EnergyResolution ):
     def GetSigma( self, energy ):
         """ Overloaded version."""
         # Find MeV resolution at this energy
-        numHits = self._NhitPerMeV * energy
+        numHits = self._NHitPerMeV * energy
         # Sigma in NHits is sqrt( numHits ) in energy it is times energy / numHits or 1 / NhitPerMeV
         sigma = math.sqrt( numHits ) / numHits * energy
         return sigma

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
 # The Nd Signal(s?)
-
-# Register the spectra types in this file
-SpectraTypes.SpectraTypes["150Nd0v"] = S150Nd
+import Background
+import SpectrumUtil
 
 class S150Nd( Background.Background ):
     """ Neodymium 150 signal definition."""
