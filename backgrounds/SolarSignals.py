@@ -4,7 +4,7 @@
 import Background
 import SpectrumUtil
 
-class SPEP( Background.Background ):
+class SPEP( Background.SolarBackground ):
     """ PEP signal/background definition."""
     def __init__( self ):
         super( SPEP, self ).__init__( "PEP" )
@@ -22,7 +22,7 @@ class SPEP( Background.Background ):
         self._PreHist.Scale( self.GetActivity() / self._PreHist.GetSumOfWeights() )
         return
 
-class SCNO( Background.Background ):
+class SCNO( Background.SolarBackground ):
     """ CNO signal/background definition."""
     def __init__( self ):
         super( SCNO, self ).__init__( "CNO" )
@@ -42,7 +42,7 @@ class SCNO( Background.Background ):
         self._PreHist.Scale( self.GetActivity() / self._PreHist.GetSumOfWeights() )
         return
 
-class SB8( Background.Background ):
+class SB8( Background.SolarBackground ):
     """ B8 signal/background definition."""
     def __init__( self ):
         super( SB8, self ).__init__( "B8" )

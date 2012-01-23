@@ -2,7 +2,7 @@
 # Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
 # This script adds all the spectra to a simulation, then calculates pileup backgrounds and then plots the result.
 import Simulation
-import PlotSpectra
+import PlotSimulation
 import SpectraTypes
 import EnergyResolution
 
@@ -18,6 +18,6 @@ exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the th
 exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
 
 # Now the simulation can be plotted, first create a plotter
-examplePlotter = PlotSpectra.PlotSpectra( exampleSimulation )
+examplePlotter = PlotSimulation.PlotSimulation( exampleSimulation )
 examplePlotter.Plot( 1.0, 0.0, 6.0 ) # Plot 1 years data, over the energy domain [0.0, 6.0]MeV
 raw_input( "RET to exit" )

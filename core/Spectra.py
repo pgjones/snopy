@@ -8,8 +8,8 @@ class Spectra( object ):
     
     def __init__( self, name ):
         """ Default constructor, just sets up a generic spectra."""
-        self._PreHist = None
-        self._PostHist = None
+        self._PreHist = None # Always contains 1 year of events
+        self._PostHist = None # Always contains 1 year of events
         self._Name = name # Each Spectra type must have a unique name
         self._ScintMass = 1.0 # kg
         self._NdMass = 1.0 # kg
@@ -34,6 +34,14 @@ class Spectra( object ):
             return self._PreHist
         else:
             return self._PostHist
+    def NewHist( self, numYears ):
+        """ Return the spectra histogram scaled to the number of events for numYears of runtime."""
+        hist = self.GetHist()
+        newHist = hist.Clone( self._Name )
+        print numYears, self.GetActivity(), newHist.GetSumOfWeights()
+        newHist.Scale( numYears * self.GetActivity() / newHist.GetSumOfWeights() )
+        # Set colour here
+        return newHist
     def SetHist( self, hist ):
         """ Set the spectra histogram, only the PostHist can be set."""
         self._PostHist = hist

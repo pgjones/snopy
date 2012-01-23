@@ -56,7 +56,7 @@ class B138La( Background.Background ):
     def __init__( self ):
         super( B138La, self ).__init__( "138La" )
         self._NdTargetFraction = 5e-7
-        self._HalfLife = 4.3e-7
+        self._HalfLife = 1.05e11
         self._AtomicMass = 138
         return
     def Initialise( self, scintMass, ndMass ):
