@@ -46,10 +46,10 @@ class PlotSimulation( object ):
             self._Histograms.append( hist )
             self._SumBGHist.Add( hist )
         self._SumBGSigHist.Add( self._SumBGHist )
-        signalHist = self._Simulation.GetSignal().NewHist( numYears )
-        signalHist.Draw("SAME")
+        self._SignalHist = self._Simulation.GetSignal().NewHist( numYears )
+        self._SignalHist.Draw("SAME")
         self._Histograms.append( hist )
-        self._SumBGSigHist.Add( signalHist )
+        self._SumBGSigHist.Add( self._SignalHist )
         # Now draw the summed histograms
         self._SumBGHist.Draw("SAME")
         self._SumBGSigHist.SetLineStyle( 2 )

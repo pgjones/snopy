@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-# Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
-# This script adds all the spectra to a simulation, then calculates pileup backgrounds and then plots the result.
+# Author P G Jones - 24/01/2012 <p.jones22@physics.ox.ac.uk>
+# This script adds all the spectra to a simulation, then calculates pileup backgrounds, then calculates the limits and then plots them.
 import Simulation
 import PlotSimulation
 import SpectraTypes
 import EnergyResolution
+import ConfidenceLevel
+import SimulationSignalLimits
 import LogUtil
 
 exampleSimulation = Simulation.Simulation()
@@ -18,7 +20,12 @@ exampleSimulation.ProcessRejection() # Default is no rejection, so this is a was
 exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the theorectical Nhit based energy resolution
 exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
 
-# Now the simulation can be plotted, first create a plotter
-examplePlotter = PlotSimulation.PlotSimulation( exampleSimulation )
-examplePlotter.Plot( 1.0, 0.0, 6.0 ) # Plot 1 years data, over the energy domain [0.0, 6.0]MeV
+# Now calculate the limits using the TLimit confidence level
+tLimitCL = ConfidenceLevel.TLimitLevel( 0.9 )
+exampleLimits = SimulationSignalLimits.SimulationSignalLimits( exampleSimulation, tLimitCL )
+exampleLimits.CalculateLimits()
+
+# Now plot these limits, first create a plotter
+examplePlotter = PlotLimits( exampleLimits )
+examplePlotter.Plot()
 raw_input( "RET to exit" )

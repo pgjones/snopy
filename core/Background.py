@@ -40,8 +40,10 @@ class SolarBackground( Spectra.Spectra ):
     def SetEventsPerKtYear( self, eventsPerKtYear ):
         """ Set the number of events per Kt of scintillator per year."""
         self._EventsPerKtYear = eventsPerKtYear
+        # Values changed, must reinitialise
+        self._Initialise()
         return
-    def SetEventsPerKtYear( self ):
+    def GetEventsPerKtYear( self ):
         """ Get the number of events per Kt of scintillator per year."""
         return self._EventsPerKtYear
     def GetActivity( self ):

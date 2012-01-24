@@ -7,16 +7,14 @@ import Spectra
 import SpectraTypes
 import types
 import Pileup
+import LogUtil
 
 class Simulation( object ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
-
-    Verbosity = 0 # Higher than 0 prints stuff to the screen
-
     def __init__( self ):
-        self._PileupWindow   = 400.0 #ns
-        self._FiducialVolume = 1.0   #*100% fiducial volume percentage.
-        self._ScintMass = 1000.0
+        self._PileupWindow   = 400.0 # ns
+        self._FiducialVolume = 1.0   # *100% fiducial volume percentage.
+        self._ScintMass = 774000.0 # Kg 
         self._NdMass    = 0.01 * self._ScintMass
         
         # Now the processors
@@ -81,12 +79,11 @@ class Simulation( object ):
         return 
     def ProcessEnergyResolution( self ):
         """ Run over the backgrounds and signal and apply the energy resolution. """
-        if Simulation.Verbosity > 0:
-            print "Energy Resolution:"
+        LogUtil.Log( "Convolving Energy resolution", 0 )
         for background in self._Backgrounds:
-            if Simulation.Verbosity > 0:
-                print background.GetName()
+            LogUtil.Log( background.GetName(), 1 )
             self._EnergyResolution.ProcessSpectra( background )
+        LogUtil.Log( self._Signal.GetName(), 1 )
         self._EnergyResolution.ProcessSpectra( self._Signal )
         return
     def ProcessRejection( self ):
