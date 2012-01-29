@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Author P G Jones - 24/01/2012 <p.jones22@physics.ox.ac.uk>
 # Plots the limits calculated by the SimulationSignalLimits class
+import ROOT
+import SimulationSignalLimits
 
 class PlotLimits( object ):
     """ Plots the limits in a SimulationSignalLimits under varying options."""
@@ -27,14 +29,15 @@ class PlotLimits( object ):
         
         self._Graphs  = []
         # Produce a graph for each sigma in the set
-        for sigma in self._Limits.GetSigmas()
+        for sigma in self._Limits.GetSigmas():
             self._Graphs.append( ROOT.TGraph() )
-            self._Graphs[-1].SetName( sigma + "#sigma" )
+            self._Graphs[-1].SetName( "%i#sigma" % sigma )
         # Run over the years and set the graph points
+        print self._Limits.GetLimits()
         for yearIndex, year in enumerate( self._Limits.GetYears() ):
             # Run over the limits for this year
-            for sigmaIndex, limits in enumerate( self._Limits.GetLimits()[ yearIndex ] ):
-                self._Graphs[ sigmaIndex ].SetPoint( yearIndex, year, limits[ sigmaIndex ] )
+            for sigmaIndex, limit in enumerate( self._Limits.GetLimits()[ yearIndex ] ):
+                self._Graphs[ sigmaIndex ].SetPoint( yearIndex, year, limit )
         
         # Now plot the graphs
         self._Canvas = ROOT.TCanvas()

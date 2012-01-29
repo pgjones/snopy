@@ -4,15 +4,19 @@
 import Simulation
 import ROOT
 import SpectrumUtil
+import LogUtil
+import ColourUtil
 
 class PlotSimulation( object ):
     """ Plots the spectra in a simulation under varying options."""
-    def __init__( self, simulation ):
+    def __init__( self, simulation, colourScheme ):
         """ Construct with a simulation of spectra."""
         if not isinstance( simulation, Simulation.Simulation ):
-            print "Simultion is of incorrect type:", type( simulation )
-            return
+            LogUtil.Log( "Simultion is of incorrect type:" + str( type( simulation ) ) )
         self._Simulation =  simulation   
+        if not isinstance( colourScheme, ColourUtil.ColourUtil ):
+            LogUtil.Log( "Colour Scheme is of incorrect type" + str( type( colourScheme ) ) )
+        self._ColourScheme = colourScheme
         return
     def Plot( self, numYears, eLow, eHigh ):
         """ Plot ths spectra in the simulation."""
@@ -43,6 +47,7 @@ class PlotSimulation( object ):
         for bg in self._Simulation.GetBackgrounds():
             hist = bg.NewHist( numYears )
             hist.Draw("SAME")
+            hist.SetLineColor( self._ColourScheme.GetColour( bg.GetName() ) )
             self._Histograms.append( hist )
             self._SumBGHist.Add( hist )
         self._SumBGSigHist.Add( self._SumBGHist )

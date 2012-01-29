@@ -5,36 +5,39 @@ import SignalRejection
 import Spectra
 import MathUtil
 import SpectrumUtil
+import LogUtil
 
 kns = 1e-9 # ns in seconds
 
-def Pileup( backgrounds, pileupWindow, rejection, Verbosity = 0 ):
+def Pileup( backgrounds, pileupWindow, rejection ):
     """ Pileup all the backgrounds together within the pileup window whilst rejecting events."""
     assert( isinstance( rejection, SignalRejection.SignalRejection ) )
     pileupBackgrounds = []
     for bg1 in backgrounds:
-        if Verbosity > 0:
-            print bg1.GetName()
+        LogUtil.Log( bg1.GetName(), 1 )
         for bg2 in backgrounds:
             # Single Pileup here
-            if Verbosity > 0:
-                print "\t", bg2.GetName()
+            LogUtil.Log( "  +" + bg2.GetName(), 1 )
             activity = SinglePileupActivity( bg1, bg2, pileupWindow )
             if activity > 1:
                 pileupBackgrounds.append( SinglePileupSpectra( bg1, bg2, activity, rejection ) )
+                bg1.AddPileupEvents( activity )
+                bg2.AddPileupEvents( activity )
             for bg3 in backgrounds:
-                if Verbosity > 0:
-                    print "\t\t", bg3.GetName()
+                LogUtil.Log( "    ++" + bg3.GetName(), 1 )
                 # Double Pileup here
                 activity = DoublePileupActivity( bg1, bg2, bg3, pileupWindow )
                 if activity > 1:
                     pileupBackgrounds.append( DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ) )
+                    bg1.AddPileupEvents( activity )
+                    bg2.AddPileupEvents( activity )
+                    bg3.AddPileupEvents( activity )
             # Triple Pileup is currently neglected
     # Must now remove the duplicate or double counted backgrounds
     pileupBackgrounds = set( pileupBackgrounds )
     # Now add to backgrounds list
     backgrounds.extend( pileupBackgrounds )
-    return
+    return backgrounds
 
 def SinglePileupActivity( bg1, bg2, pileupWindow ):
     """ Return the number of events per year for single pileup."""

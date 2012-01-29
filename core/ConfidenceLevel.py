@@ -28,29 +28,25 @@ class IterativeLevel( ConfidenceLevel ):
         signal = lowerSignal + ( upperSignal - lowerSignal ) / 2.0 # Current signal test value
         results = self._Sigmas # Initialise a results list
         # Must iterate from lowest sigma first, for efficiency
-        sortedSigmas = sorted( self._Sigmas )
-        sortedSigmas.reverse()
-        for sigma in sortedSigmas:
+        for sigma in sorted( self._Sigmas ):
             LogUtil.Log( "Sigma:%i" % sigma, 2 )
             while True:
                 self._SignalHist.Scale( signal / self._SignalHist.GetSumOfWeights() )
-                print signal,
-                cl = 1.0 - self._GetCL( sigma )
-                print cl
+                cl = self._GetCL( sigma )
                 # is CL the level required?
-                if math.fabs( cl - self._CL ) < ( self._CL ) / 100:
+                if math.fabs( cl - 1.0 + self._CL ) < ( 1.0 - self._CL ) / 100:
                     results[ results.index( sigma ) ] = signal
                     # Calculate for next sigma, keep signal limits for efficiency
                     upperSignal = signal
-                    lowerSignal = 0.0 
+                    lowerSignal = 0.0
                     break
                 else:
-                    if cl > self._CL:
+                    if cl < 1.0 - self._CL:
                         upperSignal = signal
                     else:
                         lowerSignal = signal
                 signal = lowerSignal + ( upperSignal - lowerSignal ) / 2.0
-        return
+        return results
 
 class TLimitLevel( IterativeLevel ):
     """ Set a confidence level using the ROOT TLimit software."""

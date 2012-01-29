@@ -5,8 +5,9 @@ import ConfidenceLevel
 import Simulation
 import SpectrumUtil
 import LogUtil
+import Serialisable
 
-class SimulationSignalLimits( object ):
+class SimulationSignalLimits( Serialisable.Serialisable ):
     """ Calculates the limit on the signal for varying years using a defined confidence level technique."""
     def __init__( self, simulation, confidenceLevel ):
         """ Initialise the class by passing a simulation and confidence level technique."""
@@ -25,7 +26,7 @@ class SimulationSignalLimits( object ):
         self._Limits = []
         LogUtil.Log( "Calculating limits:" )
         for year in self._Years:
-            LogUtil.Log( "Year", 1 )
+            LogUtil.Log( "Year %i" % year, 1 )
             self._Limits.append( self._CalcLimit( year ) )
     def _CalcLimit( self, numYears ):
         """ Private function returns the limit on the signal for the years given."""

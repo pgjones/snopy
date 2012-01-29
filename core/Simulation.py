@@ -8,10 +8,12 @@ import SpectraTypes
 import types
 import Pileup
 import LogUtil
+import Serialisable
 
-class Simulation( object ):
+class Simulation( Serialisable.Serialisable ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
     def __init__( self ):
+        """ Constructor, set default objects."""
         self._PileupWindow   = 400.0 # ns
         self._FiducialVolume = 1.0   # *100% fiducial volume percentage.
         self._ScintMass = 774000.0 # Kg 
@@ -27,10 +29,9 @@ class Simulation( object ):
         return
     def SetEnergyResolution( self, energyResolution ):
         """ Set the energy resolution."""
-        if isinstance( energyResolution, EnergyResolution.EnergyResolution ):
-            self._EnergyResolution = energyResolution
-        else:
-            print "Unknown energy resolution type:", type( energyResolution )
+        if not isinstance( energyResolution, EnergyResolution.EnergyResolution ):
+            LogUtil.Log( "Unknown energy resolution type:" + str( type( energyResolution ) ), -1 )
+        self._EnergyResolution = energyResolution
         return
 
     def AddBackground( self, background ):
@@ -73,9 +74,8 @@ class Simulation( object ):
     # Now the functions that do calculation
     def CalculatePileupBackgrounds( self ):
         """ Automatically calculates and adds the pileup backgrounds. """
-        if Simulation.Verbosity > 0:
-            print "Pileup Backgrounds:"
-        Pileup.Pileup( self._Backgrounds, self._PileupWindow, self._SignalRejection, Simulation.Verbosity )
+        LogUtil.Log( "Pileup Backgrounds", 0 )
+        self._Backgrounds = Pileup.Pileup( self._Backgrounds, self._PileupWindow, self._SignalRejection )
         return 
     def ProcessEnergyResolution( self ):
         """ Run over the backgrounds and signal and apply the energy resolution. """

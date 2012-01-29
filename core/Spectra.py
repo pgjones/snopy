@@ -14,6 +14,7 @@ class Spectra( object ):
         self._ScintMass = 1.0 # kg
         self._NdMass = 1.0 # kg
         self._PileupLevel = 0 # No pileup, single pileup or double pileup 
+        self._PileupEvents = 0 # Number of events per year that take place as pileup instead of a pure spectra, only if PileupLevel == 0
         return
     def __eq__( self, rhs ):
         """ Check if two spectra are identical, uses the unique spectra name."""
@@ -48,6 +49,13 @@ class Spectra( object ):
     def GetActivity( self ):
         """ Return the spectra pre processed activity per year."""
         return 0.0
+    def GetNetActivity( self ):
+        """ Return the net activity, i.e. predicted activity minus pileup events."""
+        return self.GetActivity() - self._PileupEvents
+    def AddPileupEvents( self, numEvents ):
+        """ Increase the number of events that will occur as pileup instead of the pure spectra."""
+        self._PileupEvents += numEvents
+        return
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events, default fill."""
         self._ScintMass = scintMass
