@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 19/01/2012 <p.g.jones@qmul.ac.uk>
 # This script adds all the spectra to a simulation, then calculates pileup backgrounds and then plots the result.
 import Simulation
 import PlotSimulation

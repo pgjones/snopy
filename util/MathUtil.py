@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import math
-# Author P G Jones - 22/06/2011 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 22/06/2011 <p.g.jones@qmul.ac.uk>
 # Helpful Math Functions 
 
 def PoissonValue( l, k ):

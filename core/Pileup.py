@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author P G Jones - 18/01/2012 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk>
 # Calculates the pileup background shapes and rates
 import SignalRejection
 import Spectra

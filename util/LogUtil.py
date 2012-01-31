@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author P G Jones - 24/01/2012 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 24/01/2012 <p.g.jones@qmul.ac.uk>
 # Logs text to the screen if the Verbosity is high enough
 import sys
 

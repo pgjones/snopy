@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author P G Jones - 24/01/2012 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 24/01/2012 <p.g.jones@qmul.ac.uk>
 # Plots the limits calculated by the SimulationSignalLimits class
 import ROOT
 import SimulationSignalLimits

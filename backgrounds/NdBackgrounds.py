@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Author P G Jones - 19/01/2012 <p.jones22@physics.ox.ac.uk>
+# Author P G Jones - 19/01/2012 <p.g.jones@qmul.ac.uk>
 # All Nd backgrounds bar the decay chains
 import Background
 import SpectrumUtil
