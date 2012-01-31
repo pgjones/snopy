@@ -65,18 +65,15 @@ def YearToSeconds():
 
 def SinglePileupSpectra( bg1, bg2, activity, rejection ):
     """ Produce a single pileup spectra from the two backgrounds, the activity and the rejection."""
-    newBackground = Spectra.Spectra( bg1.GetName() + "+" + bg2.GetName() )
     hist1 = bg1.GetHist()
     hist2 = bg2.GetHist()
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved.Scale( activity / convolved.GetSumOfWeights() )
-    newBackground.SetHist( convolved )
-    newBackground.SetPileupLevel( 1 )
+    newBackground = Spectra.PileupSpectra( bg1.GetName() + "+" + bg2.GetName(), 1, convolved, activity )
     return newBackground
 
 def DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ):
     """ Produce a double pileup spectra from the three backgrounds, the activity and the rejection."""
-    newBackground = Spectra.Spectra( bg1.GetName() + "+" + bg2.GetName() + "+" + bg3.GetName() )
     hist1 = bg1.GetHist()
     hist2 = bg2.GetHist()
     hist3 = bg3.GetHist()
@@ -84,8 +81,7 @@ def DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ):
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved = ConvolveReject( convolved, hist3, rejection )
     convolved.Scale( activity / convolved.GetSumOfWeights() )
-    newBackground.SetHist( convolved )
-    newBackground.SetPileupLevel( 2 )
+    newBackground = Spectra.PileupSpectra( bg1.GetName() + "+" + bg2.GetName() + "+" + bg3.GetName(), 2, convolved, activity )
     return newBackground
 
 def ConvolveReject( hist1, hist2, rejection ):

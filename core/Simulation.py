@@ -17,7 +17,7 @@ class Simulation( Serialisable.Serialisable ):
         self._PileupWindow   = 400.0 # ns
         self._FiducialVolume = 1.0   # *100% fiducial volume percentage.
         self._ScintMass = 774000.0 # Kg 
-        self._NdMass    = 0.01 * self._ScintMass
+        self._NdMass    = 0.1 / 100.0 * self._ScintMass # 0.1% loading default
         
         # Now the processors
         self._EnergyResolution = EnergyResolution.EnergyResolution() # Start with the default energy resolution

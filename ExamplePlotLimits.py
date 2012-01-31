@@ -9,6 +9,7 @@ import ConfidenceLevel
 import SimulationSignalLimits
 import LogUtil
 import PlotLimits
+import ColourUtil
 
 exampleSimulation = Simulation.Simulation()
 LogUtil.Verbosity = 2 # Print stuff to the screen
@@ -21,15 +22,17 @@ LogUtil.Verbosity = 2 # Print stuff to the screen
 #exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the theorectical Nhit based energy resolution
 #exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
 
-exampleSimulation.Load()
+exampleSimulation.Load( "SimulationNoPileup.pkl" )
 
 # Now calculate the limits using the TLimit confidence level
 tLimitCL = ConfidenceLevel.TLimitLevel( 0.9 )
-exampleLimits = SimulationSignalLimits.SimulationSignalLimits( exampleSimulation, tLimitCL )
-exampleLimits.CalculateLimits( [1.0, 1.5] )
-exampleLimits.Save()
+exampleLimits = SimulationSignalLimits.NdSignalLimits( exampleSimulation, tLimitCL )
+exampleLimits.CalculateLimits( [1.0, 2.0, 3.0, 4.0, 5.0] )
+exampleLimits.Save( "Limits.pkl" )
+#exampleLimits.Load( "Limits.pkl" )
+
 
 # Now plot these limits, first create a plotter
-examplePlotter = PlotLimits.PlotLimits( exampleLimits )
+examplePlotter = PlotLimits.PlotLimits( exampleLimits, ColourUtil.DefaultColours() )
 examplePlotter.Plot()
 raw_input( "RET to exit" )

@@ -32,6 +32,10 @@ class DefaultColours( ColourUtil ):
                           "235U"    : ROOT.kMagenta + 3,
                           "232Th"   : ROOT.kSpring,
                           "238U"    : ROOT.kPink + 2 }
+        self._FillColours = { 0 : ROOT.kGreen,
+                              1 : ROOT.kBlue,
+                              2 : ROOT.kGreen,
+                              3 : ROOT.kWhite }
     def GetColour( self, bgName ):
         """ Return the colour by bgName."""
         assert( isinstance( bgName, basestring ) )
@@ -41,3 +45,11 @@ class DefaultColours( ColourUtil ):
             colour = self._Colours[ elements[0] ]
         colour += len( elements )
         return colour
+    def GetFillColour( self, index ):
+        """ Return the colour by drawing order (index, 0 is first)."""
+        # PHIL: Need the dict here?
+        if index in self._FillColours:
+            return self._FillColours[ index ]
+        else:
+            return ROOT.kBlack
+        

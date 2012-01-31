@@ -25,10 +25,6 @@ class Spectra( object ):
     def GetPileupLevel( self ):
         """ Return the pileup level."""
         return self._PileupLevel
-    def SetPileupLevel( self, pileupLevel ):
-        """ Set the pileup level."""
-        self._PileupLevel = pileupLevel
-        return
     def GetHist( self ):
         """ Return the spectra histogram, for processing etc..."""
         if self._PostHist is None:
@@ -64,6 +60,19 @@ class Spectra( object ):
             self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
             self._PostHist = None
         return
+
+class PileupSpectra( Spectra ):
+    """ Special Spectra type for pileup, allows correct activity calculation."""
+    def __init__( self, name, pileupLevel, hist, activity ):
+        """ Construct with a name."""
+        super( PileupSpectra, self ).__init__( name )
+        self._PileupLevel = pileupLevel
+        self._Activity = activity
+        super( PileupSpectra, self ).SetHist( hist )
+        return
+    def GetActivity( self ):
+        """ Overridden activity for pileup."""
+        return self._Activity
 
 class LoadedSpectra( Spectra ):
     """ Spectra loaded from a file instead of generated."""

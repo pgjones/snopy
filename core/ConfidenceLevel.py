@@ -26,7 +26,7 @@ class IterativeLevel( ConfidenceLevel ):
         upperSignal = maxSignal # Current upper limit on the signal
         lowerSignal = 0.0       # Current lower limit on the signal 
         signal = lowerSignal + ( upperSignal - lowerSignal ) / 2.0 # Current signal test value
-        results = self._Sigmas # Initialise a results list
+        results = self._Sigmas[:] # Initialise a results list
         # Must iterate from lowest sigma first, for efficiency
         for sigma in sorted( self._Sigmas ):
             LogUtil.Log( "Sigma:%i" % sigma, 2 )
