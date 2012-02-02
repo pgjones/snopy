@@ -44,7 +44,6 @@ class PlotSimulation( object ):
         vc1.SetTopMargin( 0.05 )
         vc1.SetRightMargin( 0.05 )
         frameHist.Draw()
-        frameHist.GetYaxis().SetRangeUser( 1e-1, 1e14 )
         frameHist.GetXaxis().SetRangeUser( eLow, eHigh )
         frameHist.GetXaxis().SetTitle( "Energy [MeV]" )
         frameHist.GetXaxis().SetTitleOffset( 1.0 )
@@ -53,6 +52,7 @@ class PlotSimulation( object ):
         # Create summed background and bg + signal histograms
         self._SumBGHist = SpectrumUtil.RawSpectrum( "Sum BG" )
         self._SumBGSigHist = SpectrumUtil.RawSpectrum( "Sum BG + Signal" )
+        maxCounts = 0.0 # For rescaling the histogram axis
         # Draw backgrounds and signal and summed histograms
         for bg in self._Simulation.GetBackgrounds():
             hist = bg.NewHist( numYears )
@@ -61,20 +61,32 @@ class PlotSimulation( object ):
             hist.SetLineStyle( bg.GetPileupLevel() + 1 )
             self._Histograms.append( hist )
             self._SumBGHist.Add( hist )
-            self._Legend.AddEntry( hist, bg.GetName(), "l" )
+            # Add to legend if visible in the energy domain
+            countsInDomain = hist.Integral( hist.GetXaxis().FindBin( eLow ), hist.GetXaxis().FindBin( eHigh ) )
+            if countsInDomain > 1:
+                self._Legend.AddEntry( hist, bg.GetName(), "l" )
+                maxCounts = max( [ maxCounts, countsInDomain ] )
+        # Rescale the histogram axis
+        frameHist.GetYaxis().SetRangeUser( 1e-1, maxCounts )
+        # Draw the signal first
         self._SumBGSigHist.Add( self._SumBGHist )
         self._SignalHist = self._Simulation.GetSignal().NewHist( numYears )
+        self._SignalHist.SetLineColor( self._ColourScheme.GetColour( self._Simulation.GetSignal().GetName() ) )
         self._SignalHist.Draw("SAME")
         self._Histograms.append( hist )
         self._SumBGSigHist.Add( self._SignalHist )
         # Now draw the summed histograms
+        self._SumBGHist.SetLineWidth( 3 )
         self._SumBGHist.Draw("SAME")
+        self._Legend.AddEntry( self._SumBGHist, "Sum BG", "l" )
+        self._SumBGSigHist.SetLineWidth( 4 )
         self._SumBGSigHist.SetLineStyle( 2 )
         self._SumBGSigHist.Draw("SAME")
+        self._Legend.AddEntry( self._SumBGSigHist, "Sum BG + Sig", "l" )
         self._Canvas.cd(1).SetLogy()
         self._Canvas.cd(2)
         # Draw the legend on a different canvas
-        self._Legend.SetNColumns( len( self._Histograms ) / 10 + 1 )
+        self._Legend.SetNColumns( self._Legend.GetNRows() / 50 + 1 )
         self._Legend.Draw()
         self._Canvas.cd()
         return self._Canvas

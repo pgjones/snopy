@@ -68,7 +68,8 @@ class PileupSpectra( Spectra ):
         super( PileupSpectra, self ).__init__( name )
         self._PileupLevel = pileupLevel
         self._Activity = activity
-        super( PileupSpectra, self ).SetHist( hist )
+        self._PreHist = hist
+        self._PreHist.SetName( name )
         return
     def GetActivity( self ):
         """ Overridden activity for pileup."""

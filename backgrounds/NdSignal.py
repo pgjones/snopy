@@ -34,6 +34,6 @@ class S150Nd( Background.Background ):
     def SignalToMass( self, activity ):
         """ Returns the mass given an activity in years."""
         global kme
-        halfLife = SignalToHalfLife( activity )
-        return math.sqrt( me**2 / ( self._G * self._NME**2 * halfLife ) )
+        halfLife = self.SignalToHalfLife( activity )
+        return math.sqrt( kme**2 / ( self._G * self._NME**2 * halfLife ) )
 
