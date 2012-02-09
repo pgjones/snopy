@@ -27,10 +27,10 @@ exampleSimulation.Load( "SimulationNoPileup.pkl" )
 # Now calculate the limits using the TLimit confidence level
 tLimitCL = ConfidenceLevel.TLimitLevel( 0.9 )
 exampleLimits = SimulationSignalLimits.NdSignalLimits( exampleSimulation, tLimitCL )
-exampleLimits.CalculateLimits( [1.0, 2.0, 3.0, 4.0, 5.0] )
-exampleLimits.Save( "Limits.pkl" )
-#exampleLimits.Load( "Limits.pkl" )
-
+#exampleLimits.CalculateLimits( [1.0, 2.0, 3.0, 4.0, 5.0] )
+#exampleLimits.Save( "Limits.pkl" )
+exampleLimits.Load( "Limits.pkl" )
+exampleLimits.ConvertToHalfLife()
 
 # Now plot these limits, first create a plotter
 examplePlotter = PlotLimits.PlotLimits( exampleLimits, ColourUtil.DefaultColours() )

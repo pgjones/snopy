@@ -49,9 +49,17 @@ class PlotLimits( object ):
         self._MedianGraph = self._Graphs[ medianIndex ]
         del self._Graphs[ medianIndex ]
         self._MedianGraph.SetPoint( 0, self._MedianGraph.GetX()[1], self._MedianGraph.GetY()[1] )
+        # Check if graph ordering should be reversed
+        if limits[0] > limits[ len( self._Limits.GetSigmas() ) - 1 ]:
+            self._Graphs.reverse()
 
         # Now plot the graphs
         self._Canvas = ROOT.TCanvas()
+        vc1 = self._Canvas.cd()
+        vc1.SetLeftMargin( 0.155 )
+        vc1.SetBottomMargin( 0.15 )
+        vc1.SetTopMargin( 0.05 )
+        vc1.SetRightMargin( 0.05 )
         minYear = min( self._Limits.GetYears() )
         maxYear = max( self._Limits.GetYears() )
         minLimit = min( limits )

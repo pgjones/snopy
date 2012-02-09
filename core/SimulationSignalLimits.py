@@ -54,9 +54,12 @@ class NdSignalLimits( SimulationSignalLimits ):
         """ Calculate a limit for each year in years."""
         super( NdSignalLimits, self ).CalculateLimits( years )
         self._SignalCounts = self._Limits[:] # Make copy
+        self._HalfLifes = []
+        self._Masses = []
         signal = self._Simulation.GetSignal()
-        self._HalfLifes = [ signal.SignalToHalfLife( count / year ) for limits, year in zip( self._Limits, years ) for count in limits ]
-        self._Masses = [ signal.SignalToMass( count / year ) for limits, year in zip( self._Limits, years ) for count in limits ]
+        for year, limits in zip( self._Years, self._Limits ):
+            self._HalfLifes.append( [ signal.SignalToHalfLife( count / year ) for count in limits ] )
+            self._Masses.append( [ signal.SignalToMass( count / year ) for count in limits ] )
         return
     def ConvertToHalfLife( self ):
         """ Convert the standard output to show half lifes."""

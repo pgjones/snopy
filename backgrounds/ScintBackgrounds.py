@@ -16,7 +16,7 @@ class B14C( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B14C, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.156, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.156, 1.0 ) )
         return
 
 class B40K( Background.Background ):
@@ -31,8 +31,8 @@ class B40K( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B40K, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecay( 1.311, 0.8928 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.GammaDecay( 1.460, 0.1067 * self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecay( 1.311, 0.8928 ) )
+        self._PreHist.Add( SpectrumUtil.GammaDecay( 1.460, 0.1067 ) )
         return
 
 class B39Ar( Background.Background ):
@@ -47,7 +47,7 @@ class B39Ar( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B39Ar, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.565, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.565, 1.0 ) )
         return
         
 class B85Kr( Background.Background ):
@@ -62,6 +62,6 @@ class B85Kr( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B85Kr, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.687, 0.996 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.173, 0.514, 0.004 * self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.687, 0.996 ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.173, 0.514, 0.004 ) )
         return

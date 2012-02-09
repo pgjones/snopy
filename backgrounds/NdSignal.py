@@ -24,7 +24,7 @@ class S150Nd( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( S150Nd, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.NeutrinolessDoubleBetaDecay( 3.37138, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.NeutrinolessDoubleBetaDecay( 3.37138, 1.0 ) )
         return
     def SignalToHalfLife( self, activity ):
         """ Returns the half life given an activity in years."""

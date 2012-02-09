@@ -7,6 +7,7 @@ import SpectraTypes
 import EnergyResolution
 import LogUtil
 import ColourUtil
+import PrintSimulation
 
 exampleSimulation = Simulation.Simulation()
 LogUtil.Verbosity = 2 # Print stuff to the screen
@@ -18,10 +19,12 @@ allBackgroundsList.remove( "150Nd0v" ) # Remove the signal
 #exampleSimulation.ProcessRejection() # Default is no rejection, so this is a waste of time
 #exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the theorectical Nhit based energy resolution
 #exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
-#exampleSimulation.Save( "Simulation.pkl" )
+#exampleSimulation.Save( "SimulationSolar.pkl" )
 exampleSimulation.Load( "SimulationPileup.pkl" )
 
 # Now the simulation can be plotted, first create a plotter
 examplePlotter = PlotSimulation.PlotSimulation( exampleSimulation, ColourUtil.DefaultColours() ) # Use the default colour scheme
-examplePlotter.Plot( 1.0, 3.0, 4.0 ) # Plot 1 years data, over the energy domain [0.0, 6.0]MeV
+examplePlotter.Plot( 1.0, 0.0, 6.0 ) # Plot 1 years data, over the energy domain [0.0, 6.0]MeV
+examplePrinter = PrintSimulation.PrintSimulation( exampleSimulation )
+examplePrinter.Print( 1.0, 0.0, 6.0 ) # Print 1 years data, over the energy domain [0.0, 6.0]MeV
 raw_input( "RET to exit" )

@@ -35,8 +35,8 @@ class Spectra( object ):
         """ Return the spectra histogram scaled to the number of events for numYears of runtime."""
         hist = self.GetHist()
         newHist = hist.Clone( self._Name )
+        newHist.SetDirectory(0)
         newHist.Scale( numYears * self.GetActivity() / newHist.GetSumOfWeights() )
-        # Set colour here
         return newHist
     def SetHist( self, hist ):
         """ Set the spectra histogram, only the PostHist can be set."""

@@ -21,7 +21,7 @@ def Pileup( backgrounds, pileupWindow, rejection ):
             activity = SinglePileupActivity( bg1, bg2, pileupWindow )
             if activity > 1:
                 pileupBackgrounds.append( SinglePileupSpectra( bg1, bg2, activity, rejection ) )
-                bg1.AddPileupEvents( activity )
+                bg1.AddPileupEvents( activity ) # Or k=0...
                 bg2.AddPileupEvents( activity )
             for bg3 in backgrounds:
                 LogUtil.Log( "    ++" + bg3.GetName(), 1 )

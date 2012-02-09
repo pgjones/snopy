@@ -12,13 +12,13 @@ class PlotSimulation( object ):
     def __init__( self, simulation, colourScheme ):
         """ Construct with a simulation of spectra."""
         if not isinstance( simulation, Simulation.Simulation ):
-            LogUtil.Log( "Simultion is of incorrect type:" + str( type( simulation ) ) )
+            LogUtil.Log( "Simultion is of incorrect type:" + str( type( simulation ) ), -2 )
         self._Simulation =  simulation   
         if not isinstance( colourScheme, ColourUtil.ColourUtil ):
-            LogUtil.Log( "Colour Scheme is of incorrect type" + str( type( colourScheme ) ) )
+            LogUtil.Log( "Colour Scheme is of incorrect type" + str( type( colourScheme ) ), -2 )
         self._ColourScheme = colourScheme
         return
-    def Plot( self, numYears, eLow, eHigh ):
+    def Plot( self, numYears, eLow, eHigh, canvas = None ):
         """ Plot ths spectra in the simulation."""
         # Set the ROOT style settings
         ROOT.gROOT.SetStyle("Plain")
@@ -30,13 +30,15 @@ class PlotSimulation( object ):
         ROOT.gStyle.SetLabelSize( 0.06, "xyz" )
         ROOT.gStyle.SetTitleSize( 0.06, "xyz" )
         ROOT.gStyle.SetOptStat(0)
-        
-        self._Canvas = ROOT.TCanvas()
+
+        if canvas is None:
+            canvas = ROOT.TCanvas()
+        self._Canvas = canvas
         self._Canvas.Divide( 2, 1 ) # Two columns, separate legend canvas
         self._Legend = ROOT.TLegend( 0.05, 0.05, 0.95, 0.95 )
         self._Legend.SetFillColor( ROOT.kWhite )
         self._Histograms = [] # All plotted histograms, to store in memory
-        frameHist = SpectrumUtil.RawSpectrum( "TEMP" )
+        frameHist = SpectrumUtil.RawSpectrum( "Frame" )
         self._Histograms.append( frameHist )
         vc1 = self._Canvas.cd(1)
         vc1.SetLeftMargin( 0.155 )
@@ -66,6 +68,7 @@ class PlotSimulation( object ):
             if countsInDomain > 1:
                 self._Legend.AddEntry( hist, bg.GetName(), "l" )
                 maxCounts = max( [ maxCounts, countsInDomain ] )
+            self._Canvas.Update()
         # Rescale the histogram axis
         frameHist.GetYaxis().SetRangeUser( 1e-1, maxCounts )
         # Draw the signal first
@@ -73,6 +76,7 @@ class PlotSimulation( object ):
         self._SignalHist = self._Simulation.GetSignal().NewHist( numYears )
         self._SignalHist.SetLineColor( self._ColourScheme.GetColour( self._Simulation.GetSignal().GetName() ) )
         self._SignalHist.Draw("SAME")
+        self._Legend.AddEntry( self._SignalHist, self._Simulation.GetSignal().GetName() + " : Sig", "l" )
         self._Histograms.append( hist )
         self._SumBGSigHist.Add( self._SignalHist )
         # Now draw the summed histograms

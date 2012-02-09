@@ -2,10 +2,13 @@
 # Author P G Jones - 19/01/2012 <p.g.jones@qmul.ac.uk>
 from ROOT import TH1D
 import math
+import AlphaQuenchUtil
 
 NBins   = 600 # Number of histogram bins
 LowBin  = 0.0 # Low end of the histogram energy domain [MeV]
 HighBin = 6.0 # High end of the histogram energy domain [MeV]
+
+kElectronMass = 0.511 # MeV mass of electron
 
 def RawSpectrum( histName ):
     """ Return the raw spectrum with name histName. """
@@ -13,9 +16,6 @@ def RawSpectrum( histName ):
     spectrum = TH1D( histName, histName, NBins, LowBin, HighBin )
     spectrum.SetDirectory(0) # Stop ROOT trying to memory manage it
     return spectrum
-
-ElectronMass = 0.511 # MeV mass of electron
-AlphaQuench  = 10.0  # Alpha quenching factor
 
 def BetaDecayWithGamma( QBeta,
                         QGamma,
@@ -36,7 +36,7 @@ def AlphaDecayWithGamma( QAlpha,
 def BetaDecay( Q,
                numEvents ):
     """ Produces a histogram filled with numEvents beta decay events with end point Q."""
-    global NBins, ElectronMass
+    global NBins, kElectronMass
     hist = RawSpectrum( "Beta" )
     for iBin in range( 1, NBins + 1 ):
         T = hist.GetBinCenter( iBin ) 
@@ -46,7 +46,7 @@ def BetaDecay( Q,
             if( T > Q ): # Allow for bin widths
                 binFraction = 1.0 - ( T - Q ) / hist.GetBinWidth( iBin )
                 T = Q
-            Ne = binFraction * math.sqrt( T**2 + 2 * T * ElectronMass ) * ( Q - T )**2 * ( T + ElectronMass )
+            Ne = binFraction * math.sqrt( T**2 + 2 * T * kElectronMass ) * ( Q - T )**2 * ( T + kElectronMass )
         hist.SetBinContent( iBin, Ne )
     hist.Scale( numEvents / hist.GetSumOfWeights() )
     return hist
@@ -54,7 +54,7 @@ def BetaDecay( Q,
 def DoubleBetaDecay( Q,
                numEvents ):
     """ Produces a histogram filled with numEvents double beta decay events with end point Q."""
-    global NBins, ElectronMass
+    global NBins
     hist = RawSpectrum( "Beta" )
     for iBin in range( 1, NBins + 1 ):
         T = hist.GetBinCenter( iBin )
@@ -72,9 +72,9 @@ def DoubleBetaDecay( Q,
 def AlphaDecay( Q,
                 numEvents ):
     """ Produces a histogram filled with numEvents alpha decay events with end point Q."""
-    global NBins, AlphaQuench
+    global NBins
     # First renormalise the Q by the alpha quenching factor
-    Q = Q / AlphaQuench 
+    Q = Q / AlphaQuenchUtil.QuenchingFactor( Q )
     hist = RawSpectrum( "Alpha" )
     for iBin in range( 1, NBins + 1 ):
         T = hist.GetBinCenter( iBin )

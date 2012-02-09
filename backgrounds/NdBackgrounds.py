@@ -16,7 +16,7 @@ class B150Nd( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B150Nd, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.DoubleBetaDecay( 3.37138, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.DoubleBetaDecay( 3.37138, 1.0 ) )
         return
 
 class B144Nd( Background.Background ):
@@ -31,7 +31,7 @@ class B144Nd( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B144Nd, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.AlphaDecay( 1.380, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.AlphaDecay( 1.380, 1.0 ) )
         return
 
 class B176Lu( Background.Background ):
@@ -46,8 +46,8 @@ class B176Lu( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B176Lu, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.194, 0.998, 0.0034 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.595, 0.597, 0.9966 * self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.194, 0.998, 0.0034 ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.595, 0.597, 0.9966 ) )
         return
 
 class B138La( Background.Background ):
@@ -62,8 +62,8 @@ class B138La( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B138La, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.255, 0.789, 0.336 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.GammaDecay( 1.436, 0.664 * self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.255, 0.789, 0.336 ) )
+        self._PreHist.Add( SpectrumUtil.GammaDecay( 1.436, 0.664 ) )
         return
 
 class B147Sm( Background.Background ):
@@ -78,7 +78,7 @@ class B147Sm( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B147Sm, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.AlphaDecay( 2.310, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.AlphaDecay( 2.310, 1.0 ) )
         return
 
 class B148Sm( Background.Background ):
@@ -93,7 +93,7 @@ class B148Sm( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B148Sm, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.AlphaDecay( 1.986, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.AlphaDecay( 1.986, 1.0 ) )
         return
 
 class B227Ac( Background.Background ):
@@ -108,10 +108,10 @@ class B227Ac( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B227Ac, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.0203, 0.0245, 0.10 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.0355, 0.0093, 0.35 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.0448, 0.54 * self.GetActivity() ) )
-        self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.042, 0.014 * self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.0203, 0.0245, 0.10 ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.0355, 0.0093, 0.35 ) )
+        self._PreHist.Add( SpectrumUtil.BetaDecay( 0.0448, 0.54 ) )
+        self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.042, 0.014 ) )
         return
 
 class B235U( Background.Background ):
@@ -126,5 +126,5 @@ class B235U( Background.Background ):
     def Initialise( self, scintMass, ndMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B235U, self ).Initialise( scintMass, ndMass )
-        self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.291, 0.3878, self.GetActivity() ) )
+        self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.291, 0.3878, 1.0 ) )
         return

@@ -12,12 +12,12 @@ import Serialisable
 
 class Simulation( Serialisable.Serialisable ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
-    def __init__( self ):
+    def __init__( self, ndLoading = 0.1 ):
         """ Constructor, set default objects."""
         self._PileupWindow   = 400.0 # ns
         self._FiducialVolume = 1.0   # *100% fiducial volume percentage.
         self._ScintMass = 774000.0 # Kg 
-        self._NdMass    = 0.1 / 100.0 * self._ScintMass # 0.1% loading default
+        self._NdMass    = ndLoading / 100.0 * self._ScintMass # 0.1% loading default
         
         # Now the processors
         self._EnergyResolution = EnergyResolution.EnergyResolution() # Start with the default energy resolution
@@ -30,7 +30,7 @@ class Simulation( Serialisable.Serialisable ):
     def SetEnergyResolution( self, energyResolution ):
         """ Set the energy resolution."""
         if not isinstance( energyResolution, EnergyResolution.EnergyResolution ):
-            LogUtil.Log( "Unknown energy resolution type:" + str( type( energyResolution ) ), -1 )
+            LogUtil.Log( "Unknown energy resolution type:" + str( type( energyResolution ) ), -2 )
         self._EnergyResolution = energyResolution
         return
 
@@ -44,8 +44,7 @@ class Simulation( Serialisable.Serialisable ):
             for bg in background:
                 self.AddBackground( SpectraTypes.SpectraTypes[ bg ]() )
         else:
-            print "Unknown background type:", type( background )
-            return
+            LogUtil.Log( "Unknown background type:" + str( type( background ) ), -2 )
         self._Backgrounds[-1].Initialise( self._ScintMass, self._NdMass )
         return
     def AddSignal( self, signal ):

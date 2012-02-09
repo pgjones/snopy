@@ -19,7 +19,7 @@ class SPEP( Background.SolarBackground ):
             if( T <= 1.2 + self._PreHist.GetBinWidth( iBin ) ):
                 Ne = 100 - 23.85 * T + 6.84 * T**2
             self._PreHist.SetBinContent( iBin, Ne )
-        self._PreHist.Scale( self.GetActivity() / self._PreHist.GetSumOfWeights() )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class SCNO( Background.SolarBackground ):
@@ -39,7 +39,7 @@ class SCNO( Background.SolarBackground ):
             elif( T <= 1.5 + self._PreHist.GetBinWidth( iBin ) ):
                 Ne = 332.084 - 423.353 * T + 134.585 * T**2
             self._PreHist.SetBinContent( iBin, Ne )
-        self._PreHist.Scale( self.GetActivity() / self._PreHist.GetSumOfWeights() )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class SB8( Background.SolarBackground ):
@@ -55,5 +55,24 @@ class SB8( Background.SolarBackground ):
             T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
             Ne = 3.28229 - 0.219904 * T + 0.00981048 * T**2 - 0.0105927 * T**3 + 0.00151589 * T**4 - 7.66537e-05 * T**5 + 1.31912e-06 * T**6
             self._PreHist.SetBinContent( iBin, Ne )
-        self._PreHist.Scale( self.GetActivity() / self._PreHist.GetSumOfWeights() )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
+
+class SBe7( Background.SolarBackground ):
+    """ Be7 signal/background definition."""
+    def __init__( self ):
+        super( SBe7, self ).__init__( "Be7 nu" )
+        self._EventsPerKtYear = 199913 # DocDB-83
+        return
+    def Initialise( self, scintMass, ndMass ):
+        """ Set the PreHist spectra to a years unprocessed events."""
+        super( SBe7, self ).Initialise( scintMass, ndMass )
+        for iBin in range( 1, SpectrumUtil.NBins + 1 ):
+            T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
+            Ne = 0
+            if( T <= 0.65 + self._PreHist.GetBinWidth( iBin ) ):
+                Ne = 3439.38 - 1531.56 * T + 654.453 * T**2
+            self._PreHist.SetBinContent( iBin, Ne )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
+        return
+    

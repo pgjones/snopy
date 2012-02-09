@@ -30,8 +30,8 @@ class DefaultColours( ColourUtil ):
                           "148Sm"   : ROOT.kOrange - 6,
                           "227Ac"   : ROOT.kMagenta,
                           "235U"    : ROOT.kMagenta + 3,
-                          "232Th"   : ROOT.kSpring,
-                          "238U"    : ROOT.kPink + 2 }
+                          "232Th Chain"   : ROOT.kSpring,
+                          "238U Chain"    : ROOT.kPink + 2 }
         self._FillColours = { 0 : ROOT.kGreen,
                               1 : ROOT.kBlue,
                               2 : ROOT.kGreen,
@@ -43,13 +43,28 @@ class DefaultColours( ColourUtil ):
         colour = self._Colours[ "Generic" ]
         if elements[0] in self._Colours:
             colour = self._Colours[ elements[0] ]
-        colour += len( elements )
+        colour += len( elements ) - 1
         return colour
     def GetFillColour( self, index ):
         """ Return the colour by drawing order (index, 0 is first)."""
-        # PHIL: Need the dict here?
         if index in self._FillColours:
             return self._FillColours[ index ]
         else:
             return ROOT.kBlack
         
+class SolarColours( DefaultColours ):
+    """ Default Solar colour scheme, chosen by Helen & Phil"""
+    def __init__( self ):
+        """ Set the solar colour list."""
+        self._Colours = { "Generic" : ROOT.kBlack,
+                          "B8"      : ROOT.kBlue,
+                          "PEP"     : ROOT.kRed,
+                          "CNO"     : ROOT.kGreen,
+                          "Be7"     : ROOT.kMagenta,
+                          "14C"     : ROOT.kGreen + 3,
+                          "85Kr"    : ROOT.kYellow + 1,
+                          "39Ar"    : ROOT.kCyan,
+                          "40K"     : ROOT.kOrange + 1,
+                          "232Th Chain"   : ROOT.kSpring + 2,
+                          "238U Chain"    : ROOT.kPink + 2 }
+        return
