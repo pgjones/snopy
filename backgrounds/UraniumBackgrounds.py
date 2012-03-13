@@ -20,12 +20,13 @@ class B238U( Background.Background ):
         super( B238U, self ).__init__( "238U" )
         self._ScintTargetFraction = 1.6e-17 # DocDB-507-v2
         self._NdTargetFraction = 1.0e-15
+        self._TeTargetFraction = 1.0e-15 # GUESS
         self._HalfLife = 4.468e9
         self._AtomicMass = 238
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B238U, self ).Initialise( scintMass, ndMass )
+        super( B238U, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.220, 0.0496, 0.209 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.270, 0.79 ) )
         return
@@ -38,9 +39,9 @@ class B234Th( Background.Background ):
         self._HalfLife = 6.6e-2
         self._AtomicMass = 234
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B234Th, self ).Initialise( scintMass, ndMass )
+        super( B234Th, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 0.273, 0.703 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.106, 0.166, 0.192 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.106, 0.167, 0.076 ) )
@@ -54,9 +55,9 @@ class B234mPa( Background.Background ):
         self._HalfLife = 2.2e-6
         self._AtomicMass = 234
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B234mPa, self ).Initialise( scintMass, ndMass )
+        super( B234mPa, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 2.197, 1.0 ) )
         return
 
@@ -68,9 +69,9 @@ class B234U( Background.Background ):
         self._HalfLife = 2.455e5
         self._AtomicMass = 234
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B234U, self ).Initialise( scintMass, ndMass )
+        super( B234U, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.858, 0.714 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.805, 0.053, 0.284 ) )
         return
@@ -83,9 +84,9 @@ class B230Th( Background.Background ):
         self._HalfLife = 7.538e4
         self._AtomicMass = 230
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B230Th, self ).Initialise( scintMass, ndMass )
+        super( B230Th, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.770, 0.763 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.702, 0.067, 0.234 ) )
         return
@@ -98,9 +99,9 @@ class B226Ra( Background.Background ):
         self._HalfLife = 1600
         self._AtomicMass = 226
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B226Ra, self ).Initialise( scintMass, ndMass )
+        super( B226Ra, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.870, 0.9445 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.684, 0.186, 0.056 ) )
         return
@@ -113,9 +114,9 @@ class B222Rn( Background.Background ):
         self._HalfLife = 1e-2
         self._AtomicMass = 222
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B222Rn, self ).Initialise( scintMass, ndMass )
+        super( B222Rn, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.59, 1.0 ) )
         return
 
@@ -127,9 +128,9 @@ class B218Po( Background.Background ):
         self._HalfLife = 5.9e-6
         self._AtomicMass = 218
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B218Po, self ).Initialise( scintMass, ndMass )
+        super( B218Po, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.114, 1.0 ) )
         return
 
@@ -141,9 +142,9 @@ class B214Pb( Background.Background ):
         self._HalfLife = 5.1e-5
         self._AtomicMass = 214
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B214Pb, self ).Initialise( scintMass, ndMass )
+        super( B214Pb, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 1.023, 0.093 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.728, 0.295, 0.405 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.671, 0.352, 0.46 ) )
@@ -158,9 +159,9 @@ class B214Bi( Background.Background ):
         self._HalfLife = 3.8e-5
         self._AtomicMass = 214
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B214Bi, self ).Initialise( scintMass, ndMass )
+        super( B214Bi, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 3.272, 0.199 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.894, 1.378, 0.072 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.729, 1.543, 0.03 ) )
@@ -184,9 +185,9 @@ class B214Po( Background.Background ):
         self._HalfLife = 5.2e-12
         self._AtomicMass = 214
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B214Po, self ).Initialise( scintMass, ndMass )
+        super( B214Po, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 7.833, 1.0 ) )
         return
 
@@ -198,9 +199,9 @@ class B210Pb( Background.Background ):
         self._HalfLife = 22.3
         self._AtomicMass = 210
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B210Pb, self ).Initialise( scintMass, ndMass )
+        super( B210Pb, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 0.064, 0.16 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.017, 0.047, 0.84 ) )
         return
@@ -213,9 +214,9 @@ class B210Bi( Background.Background ):
         self._HalfLife = 1.4e-2
         self._AtomicMass = 210
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B210Bi, self ).Initialise( scintMass, ndMass )
+        super( B210Bi, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.BetaDecay( 1.162, 1.0 ) )
         return
 
@@ -227,9 +228,9 @@ class B210Po( Background.Background ):
         self._HalfLife = 0.38
         self._AtomicMass = 210
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B210Po, self ).Initialise( scintMass, ndMass )
+        super( B210Po, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.407, 1.0 ) )
         return
     

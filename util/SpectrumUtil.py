@@ -54,17 +54,19 @@ def BetaDecay( Q,
 def DoubleBetaDecay( Q,
                numEvents ):
     """ Produces a histogram filled with numEvents double beta decay events with end point Q."""
-    global NBins
+    global NBins, kElectronMass
     hist = RawSpectrum( "Beta" )
+    Q = Q / kElectronMass        
     for iBin in range( 1, NBins + 1 ):
         T = hist.GetBinCenter( iBin )
+        T = T / kElectronMass
         Ne = 0
         if( T <= Q + hist.GetBinWidth( iBin ) ):
             binFraction = 1.0 # Fraction of bin to fill
             if( T > Q ): # Allow for bin widths
                 binFraction = 1.0 - ( T - Q ) / hist.GetBinWidth( iBin )
                 T = Q
-            Ne = binFraction * ( Q - T )**5 * ( 1 + 2 * T + 4 * T**2 / 3 + T**3 / 3 + T**4 / 30 )
+            Ne = binFraction * T * ( Q - T )**5 * ( 1 + 2 * T + 4 * T**2 / 3 + T**3 / 3 + T**4 / 30 )
         hist.SetBinContent( iBin, Ne )
     hist.Scale( numEvents / hist.GetSumOfWeights() )
     return hist

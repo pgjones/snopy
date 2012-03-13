@@ -47,12 +47,15 @@ class SimulationSignalLimits( Serialisable.Serialisable ):
     def GetSigmas( self ):
         """ Return the list of sigmas used."""
         return self._Sigmas
+    def GetSimulation( self ):
+        """ Return the simulation."""
+        return self._Simulation
     
-class NdSignalLimits( SimulationSignalLimits ):
+class DblBetaSignalLimits( SimulationSignalLimits ):
     """ Extends the calculation to allow conversion between half-life, mass or signal count values."""
     def CalculateLimits( self, years = [ 1.0, 2.0, 3.0, 4.0, 5.0 ] ):
         """ Calculate a limit for each year in years."""
-        super( NdSignalLimits, self ).CalculateLimits( years )
+        super( DblBetaSignalLimits, self ).CalculateLimits( years )
         self._SignalCounts = self._Limits[:] # Make copy
         self._HalfLifes = []
         self._Masses = []

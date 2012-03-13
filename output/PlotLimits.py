@@ -30,7 +30,9 @@ class PlotLimits( object ):
         ROOT.gStyle.SetOptStat(0)
         ROOT.gStyle.SetPadTickX(1)
         ROOT.gStyle.SetPadTickY(1)
-        
+
+        self._Legend = ROOT.TLegend( 0.7, 0.7, 0.95, 0.95 )
+        self._Legend.SetFillColor( ROOT.kWhite )
         self._Graphs  = []
         # Produce a graph for each sigma in the set
         medianIndex = -1
@@ -69,7 +71,7 @@ class PlotLimits( object ):
         self._FrameGraph.SetPoint( 1, maxYear, maxLimit )
         self._FrameGraph.Draw( "AP" )
         self._FrameGraph.GetXaxis().SetTitle( "Livetime Years [yr]." )
-        self._FrameGraph.GetYaxis().SetTitle( "Limits" )
+        self._FrameGraph.GetYaxis().SetTitle( "90% CL Limit [eV]" )
         self._Graphs.reverse()
         for index, graph in enumerate( self._Graphs ):
             # Set the plot colour
@@ -78,7 +80,11 @@ class PlotLimits( object ):
             graph.SetPoint( 0, minYear, minLimit )
             graph.SetPoint( len( self._Limits.GetYears() ) + 1, maxYear, minLimit )
             graph.Draw( "F" )
+        self._Legend.AddEntry( self._Graphs[0], "2 #sigma band", "f" )
+        self._Legend.AddEntry( self._Graphs[1], "1 #sigma band", "f" )
         self._MedianGraph.Draw("L")
+        self._Legend.AddEntry( self._MedianGraph, "Median Limit", "l" )
+        self._Legend.Draw()
 
         return self._Canvas
     

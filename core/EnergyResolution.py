@@ -50,7 +50,8 @@ class EnergyLookup( EnergyResolution ):
     """ Current best RAT energy fitter values."""
     def GetSigma( self, energy ):
         """ Return the resolution at this energy, in MeV."""
-        factor = 0.059 + 0.005 * energy
+        #factor = 0.0375711 + 0.0334513 * energy # Full volume
+        factor = 0.0406445 + 0.0217787 * energy # Fiducial Volume cut
         # Find MeV resolution at this energy
-        sigma = factor * math.sqrt( energy )
+        sigma = factor
         return sigma

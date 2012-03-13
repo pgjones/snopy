@@ -10,9 +10,9 @@ class SPEP( Background.SolarBackground ):
         super( SPEP, self ).__init__( "PEP" )
         self._EventsPerKtYear = 10834 # DocDB-83
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( SPEP, self ).Initialise( scintMass, ndMass )
+        super( SPEP, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         for iBin in range( 1, SpectrumUtil.NBins + 1 ):
             T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
             Ne = 0
@@ -28,9 +28,9 @@ class SCNO( Background.SolarBackground ):
         super( SCNO, self ).__init__( "CNO" )
         self._EventsPerKtYear = 21900 # DocDB-83
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( SCNO, self ).Initialise( scintMass, ndMass )
+        super( SCNO, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         for iBin in range( 1, SpectrumUtil.NBins + 1 ):
             T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
             Ne = 0
@@ -48,9 +48,9 @@ class SB8( Background.SolarBackground ):
         super( SB8, self ).__init__( "B8" )
         self._EventsPerKtYear = 1837 # DocDB-83
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( SB8, self ).Initialise( scintMass, ndMass )
+        super( SB8, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         for iBin in range( 1, SpectrumUtil.NBins + 1 ):
             T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
             Ne = 3.28229 - 0.219904 * T + 0.00981048 * T**2 - 0.0105927 * T**3 + 0.00151589 * T**4 - 7.66537e-05 * T**5 + 1.31912e-06 * T**6
@@ -64,9 +64,9 @@ class SBe7( Background.SolarBackground ):
         super( SBe7, self ).__init__( "Be7 nu" )
         self._EventsPerKtYear = 199913 # DocDB-83
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( SBe7, self ).Initialise( scintMass, ndMass )
+        super( SBe7, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         for iBin in range( 1, SpectrumUtil.NBins + 1 ):
             T = self._PreHist.GetBinCenter( iBin ) # Kinetic energy
             Ne = 0

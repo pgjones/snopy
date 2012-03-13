@@ -37,6 +37,9 @@ NdBGList["147Sm"] = NdBackgrounds.B147Sm
 NdBGList["148Sm"] = NdBackgrounds.B148Sm
 NdBGList["227Ac"] = NdBackgrounds.B227Ac
 NdBGList["235U"]  = NdBackgrounds.B235U
+# Register Te backgrounds
+import TeBackgrounds
+SpectraTypes["130Te2v"] = TeBackgrounds.B130Te
 # Register solar backgrounds/signals
 import SolarSignals
 SpectraTypes["PEP"] = SolarSignals.SPEP
@@ -51,6 +54,9 @@ SolarSigList["Be7"]  = SolarSignals.SBe7
 # Register Nd signal
 import NdSignal
 SpectraTypes["150Nd0v"] = NdSignal.S150Nd
+# Register Te signal
+import TeSignal
+SpectraTypes["130Te0v"] = TeSignal.S130Te
 # Register Chain Backgrounds
 import UraniumBackgrounds
 SpectraTypes["238UChain"] = UraniumBackgrounds.BUraniumChain

@@ -13,8 +13,10 @@ class Spectra( object ):
         self._Name = name # Each Spectra type must have a unique name
         self._ScintMass = 1.0 # kg
         self._NdMass = 1.0 # kg
+        self._TeMass = 1.0 # kg
         self._PileupLevel = 0 # No pileup, single pileup or double pileup 
         self._PileupEvents = 0 # Number of events per year that take place as pileup instead of a pure spectra, only if PileupLevel == 0
+        self._FiducialVolume = 1.0 # Percentage of total volume used after fiducial volume cut
         return
     def __eq__( self, rhs ):
         """ Check if two spectra are identical, uses the unique spectra name."""
@@ -36,7 +38,7 @@ class Spectra( object ):
         hist = self.GetHist()
         newHist = hist.Clone( self._Name )
         newHist.SetDirectory(0)
-        newHist.Scale( numYears * self.GetActivity() / newHist.GetSumOfWeights() )
+        newHist.Scale( self._FiducialVolume * numYears * self.GetActivity() / newHist.GetSumOfWeights() ) # PHIL TEMP FV
         return newHist
     def SetHist( self, hist ):
         """ Set the spectra histogram, only the PostHist can be set."""
@@ -52,10 +54,12 @@ class Spectra( object ):
         """ Increase the number of events that will occur as pileup instead of the pure spectra."""
         self._PileupEvents += numEvents
         return
-    def Initialise( self, scintMass, ndMass ):
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Set the PreHist spectra to a years unprocessed events, default fill."""
+        self._FiducialVolume = fiducialVolume
         self._ScintMass = scintMass
         self._NdMass = ndMass
+        self._TeMass = teMass
         if self._PreHist is None and self._PostHist is None:
             self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
             self._PostHist = None

@@ -15,20 +15,23 @@ class Background( Spectra.Spectra ):
         self._AtomicMass = 1.0 # u, i.e. mass is 1 u
         self._ScintTargetFraction = 0.0 # g/g in sctinillator
         self._NdTargetFraction    = 0.0 # g/g in Nd loading
-    def SetTargetFractions( self, scintTarget, ndTarget ):
-        """ Set Target fractions in g/g."""
-        self._ScintTargetFraction = scintTarget
-        self._NdTargetFraction = ndTarget
-        # Values changed, must reinitialise
-        self.Initialise() 
+        self._TeTargetFraction    = 0.0 # g/g in Te loading
+    def SetTargetFractions( self, scintTarget = None, ndTarget = None, teTarget = None ):
+        """ Set Target fractions in g/g. """
+        if scintTarget != None:
+            self._ScintTargetFraction = scintTarget
+        if ndTarget != None:
+            self._NdTargetFraction = ndTarget
+        if teTarget != None:
+            self._TeTargetFraction = teTarget
         return
     def GetTargetFractions( self ):
         """ Return the Target fractions in g/g."""
-        return [ self._ScintTargetFraction, self._NdTargetFraction ]
+        return [ self._ScintTargetFraction, self._NdTargetFraction, self._TeTargetFraction ]
     def GetActivity( self ):
         """ Activity per year."""
-        activity = self._ScintMass * self._ScintTargetFraction + self._NdMass * self._NdTargetFraction
-        activity *= math.log(2) / ( Background.kU * self._AtomicMass * self._HalfLife )
+        mass = self._ScintMass * self._ScintTargetFraction + self._NdMass * self._NdTargetFraction + self._TeMass * self._TeTargetFraction
+        activity = mass * math.log(2) / ( Background.kU * self._AtomicMass * self._HalfLife )
         return activity
 
 class SolarBackground( Spectra.Spectra ):
@@ -40,8 +43,6 @@ class SolarBackground( Spectra.Spectra ):
     def SetEventsPerKtYear( self, eventsPerKtYear ):
         """ Set the number of events per Kt of scintillator per year."""
         self._EventsPerKtYear = eventsPerKtYear
-        # Values changed, must reinitialise
-        self._Initialise()
         return
     def GetEventsPerKtYear( self ):
         """ Get the number of events per Kt of scintillator per year."""

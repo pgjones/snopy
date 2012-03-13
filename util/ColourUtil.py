@@ -16,6 +16,8 @@ class DefaultColours( ColourUtil ):
         self._Colours = { "Generic" : ROOT.kBlack,
                           "150Nd0v" : ROOT.kRed,
                           "150Nd2v" : ROOT.kBlue,
+                          "130Te0v" : ROOT.kRed,
+                          "130Te2v" : ROOT.kBlue,
                           "144Nd"   : ROOT.kCyan,
                           "14C"     : ROOT.kGreen,
                           "40K"     : ROOT.kGreen + 3,

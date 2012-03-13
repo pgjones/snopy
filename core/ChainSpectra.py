@@ -21,11 +21,17 @@ class ChainSpectra( Spectra.Spectra ):
     def GetActivity( self ):
         """ Return the chain activity, head of the chain."""
         return self._Backgrounds[0].GetActivity()
-    def Initialise( self, scintMass, ndMass ):
+    def SetTargetFractions( self, scintTarget = None, ndTarget = None, teTarget = None ):
+        """ Set the top of the chain's target fractions."""
+        self._Backgrounds[0].SetTargetFractions( scintTarget, ndTarget, teTarget )
+    def GetTargetFractions( self ):
+        """ Return the top of the chain's target fractions."""
+        return self._Backgrounds[0].GetTargetFractions()
+    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
         """ Initialise the backgrounds."""
-        super( ChainSpectra, self ).Initialise( scintMass, ndMass )
+        super( ChainSpectra, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
         for bg in self._Backgrounds:
-            bg.Initialise( scintMass, ndMass )
+            bg.Initialise( fiducialVolume, scintMass, ndMass, teMass )
         self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
         for bg, fraction in zip( self._Backgrounds, self._Fractions ):
             self._PreHist.Add( bg.GetHist(), fraction )

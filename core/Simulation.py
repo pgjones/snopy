@@ -12,13 +12,13 @@ import Serialisable
 
 class Simulation( Serialisable.Serialisable ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
-    def __init__( self, ndLoading = 0.1 ):
+    def __init__( self, ndLoading = 0.0, teLoading = 0.0, fiducialVolume = 1.0 ):
         """ Constructor, set default objects."""
         self._PileupWindow   = 400.0 # ns
-        self._FiducialVolume = 1.0   # *100% fiducial volume percentage.
+        self._FiducialVolume = fiducialVolume # *100% fiducial volume percentage.
         self._ScintMass = 774000.0 # Kg 
-        self._NdMass    = ndLoading / 100.0 * self._ScintMass # 0.1% loading default
-        
+        self._NdMass    = ndLoading / 100.0 * self._ScintMass # e.g 0.1% loading default
+        self._TeMass    = teLoading / 100.0 * self._ScintMass # e.g 0.1% loading default
         # Now the processors
         self._EnergyResolution = EnergyResolution.EnergyResolution() # Start with the default energy resolution
         self._SignalRejection  = SignalRejection.SignalRejection()   # Start with the default rejection levels
@@ -45,7 +45,7 @@ class Simulation( Serialisable.Serialisable ):
                 self.AddBackground( SpectraTypes.SpectraTypes[ bg ]() )
         else:
             LogUtil.Log( "Unknown background type:" + str( type( background ) ), -2 )
-        self._Backgrounds[-1].Initialise( self._ScintMass, self._NdMass )
+        self._Backgrounds[-1].Initialise( self._FiducialVolume, self._ScintMass, self._NdMass, self._TeMass )
         return
     def AddSignal( self, signal ):
         """ Add a signal, replaces the existing. """
@@ -53,7 +53,7 @@ class Simulation( Serialisable.Serialisable ):
             self._Signal = SpectraTypes.SpectraTypes[ signal ]()
         elif isinstance( signal, Spectra.Spectra ):
             self._Signal = signal
-        self._Signal.Initialise( self._ScintMass, self._NdMass )
+        self._Signal.Initialise( self._FiducialVolume, self._ScintMass, self._NdMass, self._TeMass )
         return
     def SetEnergyResolution( self, energyResolution ):
         """ Set the energy resolution type, must be a EnergyResolution.EnergyResolution derived object. """

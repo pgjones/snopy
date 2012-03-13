@@ -9,18 +9,18 @@ import LogUtil
 import ColourUtil
 import PrintSimulation
 
-exampleSimulation = Simulation.Simulation()
+exampleSimulation = Simulation.Simulation( ndLoading = 0.1 )
 LogUtil.Verbosity = 2 # Print stuff to the screen
 allBackgroundsList = SpectraTypes.SpectraTypes.keys() # List of all the available spectra
 allBackgroundsList.remove( "150Nd0v" ) # Remove the signal
-#exampleSimulation.AddBackground( allBackgroundsList ) # Can also do this individually
-#exampleSimulation.AddSignal( "150Nd0v" ) # Add the signal specially
+exampleSimulation.AddBackground( "150Nd2v" )#allBackgroundsList ) # Can also do this individually
+exampleSimulation.AddSignal( "150Nd0v" ) # Add the signal specially
 #exampleSimulation.CalculatePileupBackgrounds() # Calculate all the pileup backgrounds (this is slow)
-#exampleSimulation.ProcessRejection() # Default is no rejection, so this is a waste of time
-#exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the theorectical Nhit based energy resolution
-#exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
+exampleSimulation.ProcessRejection() # Default is no rejection, so this is a waste of time
+exampleSimulation.SetEnergyResolution( EnergyResolution.Nhit() ) # Choose the theorectical Nhit based energy resolution
+exampleSimulation.ProcessEnergyResolution() # Apply the Nhit energy resolution
 #exampleSimulation.Save( "SimulationSolar.pkl" )
-exampleSimulation.Load( "SimulationPileup.pkl" )
+#exampleSimulation.Load( "SimulationPileup.pkl" )
 
 # Now the simulation can be plotted, first create a plotter
 examplePlotter = PlotSimulation.PlotSimulation( exampleSimulation, ColourUtil.DefaultColours() ) # Use the default colour scheme
