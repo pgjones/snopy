@@ -3,6 +3,7 @@
 # Calculates the pileup background shapes and rates
 import SignalRejection
 import Spectra
+import PileupBackground
 import MathUtil
 import SpectrumUtil
 import LogUtil
@@ -21,17 +22,17 @@ def Pileup( backgrounds, pileupWindow, rejection ):
             activity = SinglePileupActivity( bg1, bg2, pileupWindow )
             if activity > 1:
                 pileupBackgrounds.append( SinglePileupSpectra( bg1, bg2, activity, rejection ) )
-                bg1.AddPileupEvents( activity ) # Or k=0...
-                bg2.AddPileupEvents( activity )
+                #bg1.AddPileupEvents( activity ) # Or k=0...
+                #bg2.AddPileupEvents( activity )
             for bg3 in backgrounds:
                 LogUtil.Log( "    ++" + bg3.GetName(), 1 )
                 # Double Pileup here
                 activity = DoublePileupActivity( bg1, bg2, bg3, pileupWindow )
                 if activity > 1:
                     pileupBackgrounds.append( DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ) )
-                    bg1.AddPileupEvents( activity )
-                    bg2.AddPileupEvents( activity )
-                    bg3.AddPileupEvents( activity )
+                    #bg1.AddPileupEvents( activity )
+                    #bg2.AddPileupEvents( activity )
+                    #bg3.AddPileupEvents( activity )
             # Triple Pileup is currently neglected
     # Must now remove the duplicate or double counted backgrounds
     pileupBackgrounds = set( pileupBackgrounds )
@@ -69,7 +70,7 @@ def SinglePileupSpectra( bg1, bg2, activity, rejection ):
     hist2 = bg2.GetHist()
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved.Scale( activity / convolved.GetSumOfWeights() )
-    newBackground = Spectra.PileupSpectra( bg1.GetName() + "+" + bg2.GetName(), 1, convolved, activity )
+    newBackground = PileupBackground.PileupBackground( bg1.GetName() + "+" + bg2.GetName(), 1, convolved, activity, bg1._DetectorInfo )
     return newBackground
 
 def DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ):
@@ -81,7 +82,7 @@ def DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ):
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved = ConvolveReject( convolved, hist3, rejection )
     convolved.Scale( activity / convolved.GetSumOfWeights() )
-    newBackground = Spectra.PileupSpectra( bg1.GetName() + "+" + bg2.GetName() + "+" + bg3.GetName(), 2, convolved, activity )
+    newBackground = PileupBackground.PileupBackground( bg1.GetName() + "+" + bg2.GetName() + "+" + bg3.GetName(), 2, convolved, activity, bg1._DetectorInfo )
     return newBackground
 
 def ConvolveReject( hist1, hist2, rejection ):

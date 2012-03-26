@@ -6,6 +6,7 @@ import ROOT
 import SpectrumUtil
 import LogUtil
 import ColourUtil
+import PileupBackground
 
 class PlotSimulation( object ):
     """ Plots the spectra in a simulation under varying options."""
@@ -60,7 +61,8 @@ class PlotSimulation( object ):
             hist = bg.NewHist( numYears )
             hist.Draw("SAME")
             hist.SetLineColor( self._ColourScheme.GetColour( bg.GetName() ) )
-            hist.SetLineStyle( bg.GetPileupLevel() + 1 )
+            if isinstance( bg, PileupBackground.PileupBackground ):
+                hist.SetLineStyle( bg.GetPileupLevel() + 1 )
             self._Histograms.append( hist )
             self._SumBGHist.Add( hist )
             # Add to legend if visible in the energy domain

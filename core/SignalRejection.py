@@ -2,6 +2,7 @@
 # Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk>
 # All events can be rejected as pileup, these classes return the fraction that survive.
 import Spectra
+import PileupBackground
 import SpectrumUtil
 
 class SignalRejection( object ):
@@ -9,7 +10,7 @@ class SignalRejection( object ):
     of pileup events."""
     def __init__( self ):
         """ Constructor."""
-        self._FiducialVolume = 1.0
+        self._FiducialVolume = 6000.0
         return
     def SetFiducialVolume( self, fiducialVolume ):
         """ Set the fiducial volume."""
@@ -20,7 +21,7 @@ class SignalRejection( object ):
         """ Process the spectra by rejecting events."""
         assert( isinstance( spectra, Spectra.Spectra ) )
         # This function does not reject pileup spectra
-        if spectra.GetPileupLevel() != 0:
+        if isinstance( spectra, PileupBackground.PileupBackground ):
             return
         hist = spectra.GetHist()
         for b1 in range( 1, SpectrumUtil.NBins + 1 ):
@@ -38,24 +39,46 @@ class SignalRejection( object ):
 class CurrentRejection( SignalRejection ):
     def __init__( self ):
         super( CurrentRejection, self ).__init__()
-        #                       0.5    1.0    1.5    2.0    2.5    3.0    3.5     MeV
-        self.SuvivalFactors = [ 0.402, 0.528, 0.716, 0.613, 0.673, 0.650, 0.630 ]
         self._NAVFraction = 5.4**3 / 6.0**3
         return
     def GetSurvivalFraction( self, energy ):
         """ Based on the pileup rejection factors 2011."""
+        #                    0.5    1.0    1.5    2.0    2.5    3.0    3.5     MeV
+        suvivalFactors = [ 0.402, 0.528, 0.716, 0.613, 0.673, 0.650, 0.630 ]
+
         eBin = int( energy / 0.5 ) - 1
         if eBin > 5:
-            survivalProb = self.SurvivalFactors[6]
+            survivalProb = survivalFactors[6]
         elif eBin < 0:
-            survivalProb = self.SurvivalFactors[0]
+            survivalProb = survivalFactors[0]
         else:
-            survivalProb = self.SurvivalFactors[eBin] + ( energy - eBin * 0.5 ) * ( self.SurvivalFactors[ eBin + 1 ] - self.SurvivalFactors[ eBin ] )
+            survivalProb = survivalFactors[eBin] + ( energy - eBin * 0.5 ) * ( survivalFactors[ eBin + 1 ] - survivalFactors[ eBin ] )
         # Assuming all NAV events are rejected, correct the survival factor based on the fiducial volume
         if self._FiducialVolume > self._NAVFraction: 
             survivalProb *= self._FiducialVolume - self._NAVFraction
         return survivalProb
     def GetPileupSurvivalFactor( self, energy1, energy2 ):
         """ Based on the pileup rejection factors 2011."""
-
-        
+        #                   0.5    1.0    1.5    2.0    2.5    3.0    3.5
+        survivalFactors = [ 0.003, 0.004, 0.015, 0.013, 0.035, 0.056, 0.062,  #0.5
+                            0.004, 0.001, 0.001, 0.003, 0.006, 0.001, 0.000,  #1.0
+                            0.015, 0.001, 0.003, 0.004, 0.009, 0.000, 0.000,  #1.5
+                            0.013, 0.003, 0.004, 0.003, 0.000, 0.000, 0.000,  #2.0
+                            0.035, 0.006, 0.009, 0.000, 0.000, 0.000, 0.000,  #2.5
+                            0.056, 0.001, 0.000, 0.000, 0.000, 0.000, 0.000,  #3.0
+                            0.062, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000 ] #3.5
+        # No data for high energy, assume all survive
+        eBin1 = int( ( energy1 - 0.5 )/ 0.5 )
+        eBin2 = int( ( energy2 - 0.5 )/ 0.5 )
+        if eBin1 > 6:
+            eBin1 = 6
+        if eBin2 > 6:
+            eBin2 = 6
+        survivalProb = survivalFactors[ eBin1 + eBin2 * 7 ]
+        if eBin1 != 6:
+            survivalProb = survivalProb + ( energy1 - ( eBin1 ) * 0.5 - 0.5 ) * 2 * ( survivalFactors[ eBin1 + 1 + eBin2 * 7] - survivalFactors[ eBin1 + eBin2 * 7] )
+        if eBin2 != 6:
+            survivalProb = survivalProb + ( energy2 - ( eBin2 ) * 0.5 - 0.5 ) * 2 * ( survivalFactors[ eBin1 + eBin2 * 7 + 7] - survivalFactors[ eBin1 + eBin2 * 7] )
+        if survivalProb < 0.0: # Mising data issue...
+            return 0.0
+        return survivalProb

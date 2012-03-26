@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# Author P G Jones - 07/02/2012 <p.g.jones@qmul.ac.uk>
-# Backgrounds from the 232Th Chain
-import Background
+# Author P G Jones - 07/02/2012 <p.g.jones@qmul.ac.uk> : First Revision
+# Revision         - 26/03/2012 <p.g.jones@qmul.ac.uk> : New Spectra structure
+# InternalBackgrounds from the 232Th Chain
+import InternalBackground
 import SpectrumUtil
 import ChainSpectra
 
@@ -13,7 +14,7 @@ class BThoriumChain( ChainSpectra.ChainSpectra ):
         self._Fractions =   [ 1.0,      1.0,      1.0,      1.0,      1.0,      1.0,      1.0,      1.0,      1.0,      0.64,     0.36 ]
         return
 
-class B232Th( Background.Background ):
+class B232Th( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=900232 
     def __init__( self ):
@@ -24,14 +25,14 @@ class B232Th( Background.Background ):
         self._HalfLife = 1.405e10
         self._AtomicMass = 232
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B232Th, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B232Th, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.082, 0.779 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.018, 0.064, 0.221 ) )
         return
     
-class B228Ra( Background.Background ):
+class B228Ra( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=880228
     def __init__( self ):
@@ -39,13 +40,13 @@ class B228Ra( Background.Background ):
         self._HalfLife = 5.75
         self._AtomicMass = 228
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B228Ra, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B228Ra, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.039, 0.007, 1.0 ) )
         return
 
-class B228Ac( Background.Background ):
+class B228Ac( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=890228
     def __init__( self ):
@@ -53,9 +54,9 @@ class B228Ac( Background.Background ):
         self._HalfLife = 7e-4
         self._AtomicMass = 228
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B228Ac, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B228Ac, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.158, 0.969, 0.31 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.758, 0.396, 0.116 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 2.069, 0.058, 0.1 ) )
@@ -71,7 +72,7 @@ class B228Ac( Background.Background ):
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.445, 1.682, 0.012 ) )
         return
 
-class B228Th( Background.Background ):
+class B228Th( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=900228
     def __init__( self ):
@@ -79,14 +80,14 @@ class B228Th( Background.Background ):
         self._HalfLife = 1.9116
         self._AtomicMass = 228
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B228Th, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B228Th, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.520, 0.711 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 5.436, 0.084, 0.282 ) )
         return
 
-class B224Ra( Background.Background ):
+class B224Ra( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=880224
     def __init__( self ):
@@ -94,14 +95,14 @@ class B224Ra( Background.Background ):
         self._HalfLife = 1e-2
         self._AtomicMass = 224
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B224Ra, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B224Ra, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.789, 0.95 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 5.548, 0.241, 0.05 ) )
         return
     
-class B220Rn( Background.Background ):
+class B220Rn( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=860220 
     def __init__( self ):
@@ -109,13 +110,13 @@ class B220Rn( Background.Background ):
         self._HalfLife = 1.8e-6
         self._AtomicMass = 220
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B220Rn, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B220Rn, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.404, 1.0 ) )
         return
 
-class B216Po( Background.Background ):
+class B216Po( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=840216
     def __init__( self ):
@@ -123,13 +124,13 @@ class B216Po( Background.Background ):
         self._HalfLife = 4.6e-9 
         self._AtomicMass = 216
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B216Po, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B216Po, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.906, 1.0 ) )
         return
 
-class B212Pb( Background.Background ):
+class B212Pb( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=820212
     def __init__( self ):
@@ -137,15 +138,15 @@ class B212Pb( Background.Background ):
         self._HalfLife = 1.2e-3
         self._AtomicMass = 212
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B212Pb, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B212Pb, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecay( 0.574, 0.123 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.335, 0.239, 0.825 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.159, 0.415, 0.05 ) )
         return
 
-class B212Bi( Background.Background ):
+class B212Bi( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=830212
     def __init__( self ):
@@ -153,9 +154,9 @@ class B212Bi( Background.Background ):
         self._HalfLife = 1.2e-4
         self._AtomicMass = 212
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B212Bi, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B212Bi, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecay( 2.254, 0.555 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.527, 0.727, 0.04 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.741, 1.513, 0.014 ))
@@ -164,7 +165,7 @@ class B212Bi( Background.Background ):
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.207, 0.0975 ) )
         return
 
-class B212Po( Background.Background ):
+class B212Po( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=840212 
     def __init__( self ):
@@ -172,13 +173,13 @@ class B212Po( Background.Background ):
         self._HalfLife = 9.5e-15
         self._AtomicMass = 212
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B212Po, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B212Po, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 8.954, 1.0 ) )
         return
 
-class B208Tl( Background.Background ):
+class B208Tl( InternalBackground.InternalBackground ):
     """ Uranium 238 background definition."""
     # http://nucleardata.nuclear.lu.se/NuclearData/toi/nuclide.asp?iZA=810208
     def __init__( self ):
@@ -186,9 +187,9 @@ class B208Tl( Background.Background ):
         self._HalfLife = 5.8e-6
         self._AtomicMass = 208
         return
-    def Initialise( self, fiducialVolume, scintMass, ndMass, teMass ):
+    def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""
-        super( B208Tl, self ).Initialise( fiducialVolume, scintMass, ndMass, teMass )
+        super( B208Tl, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.293, 3.708, 0.245 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.526, 3.475, 0.218 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.803, 3.198, 0.487 ) )                
