@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk>
 # Revision         - 26/03/2012 <p.g.jones@qmul.ac.uk> : New Spectra structure
+# Revision         - 05/04/2012 <p.g.jones@qmul.ac.uk> : Spectra are only initialised if passed by name, otherwise initialisation is assumed
 # Controls the simulation of the spectra and holds all the results.
 import DetectorInfo
 import EnergyResolution
@@ -42,24 +43,24 @@ class Simulation( Serialisable.Serialisable ):
         """ Add a new background. """
         if isinstance( background, basestring ):
             self._Backgrounds.append( SpectraTypes.SpectraTypes[ background ]() )
+            self._Backgrounds[-1].Initialise()
         elif isinstance( background, Spectra.Spectra ):
             self._Backgrounds.append( background )
         elif isinstance( background, types.ListType ):
             for bg in background:
-                self.AddBackground( SpectraTypes.SpectraTypes[ bg ]() )
+                self.AddBackground( bg )
         else:
             LogUtil.Log( "Unknown background type:" + str( type( background ) ), -2 )
         self._Backgrounds[-1].SetDetectorInfo( self._DetectorInfo )
-        self._Backgrounds[-1].Initialise()
         return
     def AddSignal( self, signal ):
         """ Add a signal, replaces the existing. """
         if isinstance( signal, basestring ):
             self._Signal = SpectraTypes.SpectraTypes[ signal ]()
+            self._Signal.Initialise()
         elif isinstance( signal, Spectra.Spectra ):
             self._Signal = signal
         self._Signal.SetDetectorInfo( self._DetectorInfo )
-        self._Signal.Initialise()
         return
     def SetEnergyResolution( self, energyResolution ):
         """ Set the energy resolution type, must be a EnergyResolution.EnergyResolution derived object. """

@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk> : First revision
 # Revision         - 26/03/2012 <p.g.jones@qmul.ac.uk> : New Spectra structure, allows externals
+# Revision         - 05/04/2012 <p.g.jones@qmul.ac.uk> : Initialisation is for analytic spectra only, this will check
 # All backgrounds/signals are a spectra object, this objects holds the actual histograms
 import DetectorInfo
 import LogUtil
 import SpectrumUtil
+import RadialUtil
+from ROOT import TH2D, TFile
 
 class Spectra( object ):
     """ All backgrounds and signals are spectra, and they all derived from this. 
@@ -60,5 +63,16 @@ class Spectra( object ):
         return 0.0
     def Initialise( self ):
         """ Initialise the pre hist, all global variables should be correctly set by this point."""
-        self._PreHist = SpectrumUtil.RawSpectrum( "temp" )
+        self._PreHist = SpectrumUtil.RawSpectrum( self._Name )
+        self._RadialHist = RadialUtil.RawSpectrum( self._Name + "_r" )
+        return
+    def ImportSpectra( self, fileName ):
+        """ Import the spectra from an appropriate ROOT file."""
+        rootFile = ROOT.TFile( fileName, "READ" )
+        combinedHist = ROOT.TH2D( rootFile.Get( "Spectra" ) )
+        self._RadialHist = combinedHist.ProjectionY( self._Name + "_r" )
+        self._RadialHist.Scale( 1.0 / self._RadialHist.GetSumOfWeights() )
+        self._PreHist = combinedHist.ProjectionX( self._Name )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
+        rootFile.Close()
         return
