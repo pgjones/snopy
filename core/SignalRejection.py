@@ -24,11 +24,18 @@ class SignalRejection( object ):
         if isinstance( spectra, PileupBackground.PileupBackground ):
             return
         hist = spectra.GetHist()
+        # Reduce the count by the type dependent survival factor
+        hist.Scale( self.GetTypeSurvivalFactor( spectra.GetName() ) )
         for b1 in range( 1, SpectrumUtil.NBins + 1 ):
+            # Now reduce the count by the energy dependent survival factor
             hist.SetBinContent( b1, hist.GetBinContent( b1 ) * self.GetSurvivalFactor( hist.GetBinCenter( b1 ) ) )
         spectra.SetHist( hist )
         return
 
+    # Now the functions to overload
+    def GetTypeSurvivalFactor( sef, name ):
+        """ Some techniques target specific backgrounds, hence a specific rejection factor based on the spectra name."""
+        return 1.0
     def GetSurvivalFactor( self, energy ):
         """ The factor of events at this energy that survive."""
         return 1.0

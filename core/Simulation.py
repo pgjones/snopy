@@ -15,7 +15,7 @@ import Serialisable
 
 class Simulation( Serialisable.Serialisable ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
-    def __init__( self, ndLoading = 0.0, teLoading = 0.0, fidRadius = 6000.0 ):
+    def __init__( self, ndLoading = 0.0, teLoading = 0.0, fiducialRadius = 6000.0 ):
         """ Constructor, set default objects."""
         self._PileupWindow = 400.0 # ns
         scintMass = 774000.0 # Kg
@@ -24,7 +24,7 @@ class Simulation( Serialisable.Serialisable ):
         self._DetectorInfo = DetectorInfo.DetectorInfo( scintMass,
                                                         ndMass,
                                                         teMass,
-                                                        fidRadius ) # In m
+                                                        fiducialRadius ) # In m
         # Now the processors
         self._EnergyResolution = EnergyResolution.EnergyResolution() # Start with the default energy resolution
         self._SignalRejection  = SignalRejection.SignalRejection()   # Start with the default rejection levels    
