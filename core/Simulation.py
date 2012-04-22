@@ -24,7 +24,7 @@ class Simulation( Serialisable.Serialisable ):
         self._DetectorInfo = DetectorInfo.DetectorInfo( scintMass,
                                                         ndMass,
                                                         teMass,
-                                                        fiducialRadius ) # In m
+                                                        fiducialRadius ) # In mm
         # Now the processors
         self._EnergyResolution = EnergyResolution.EnergyResolution() # Start with the default energy resolution
         self._SignalRejection  = SignalRejection.SignalRejection()   # Start with the default rejection levels    

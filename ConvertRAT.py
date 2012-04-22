@@ -13,6 +13,7 @@ def ExtractData( fileName ):
     for ds in rat.dsreader( fileName ):
         radius = ds.GetMC().GetMCParticle(0).GetPos().Mag()
         energy = ds.GetMC().GetTotScintEdepQuenched()
+        #energy = ds.GetMC().GetTotScintEdep()
         dataResult.Fill( energy, radius )
     return dataResult
 
@@ -28,5 +29,8 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     if len( args ) != 2:
         parser.print_help()
+    print "Extracting Data:", args[0]
     data = ExtractData( args[0] )
+    print "Saving Data:", args[1]
     SaveData( args[1], data )
+    print "Done"

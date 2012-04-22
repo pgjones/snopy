@@ -66,8 +66,8 @@ def YearToSeconds():
 
 def SinglePileupSpectra( bg1, bg2, activity, rejection ):
     """ Produce a single pileup spectra from the two backgrounds, the activity and the rejection."""
-    hist1 = bg1.GetHist()
-    hist2 = bg2.GetHist()
+    hist1 = bg1.NewHist( 1.0 )
+    hist2 = bg2.NewHist( 1.0 )
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved.Scale( activity / convolved.GetSumOfWeights() )
     newBackground = PileupBackground.PileupBackground( bg1.GetName() + "+" + bg2.GetName(), 1, convolved, activity, bg1._DetectorInfo )
@@ -75,9 +75,9 @@ def SinglePileupSpectra( bg1, bg2, activity, rejection ):
 
 def DoublePileupSpectra( bg1, bg2, bg3, activity, rejection ):
     """ Produce a double pileup spectra from the three backgrounds, the activity and the rejection."""
-    hist1 = bg1.GetHist()
-    hist2 = bg2.GetHist()
-    hist3 = bg3.GetHist()
+    hist1 = bg1.NewHist( 1.0 )
+    hist2 = bg2.NewHist( 1.0 )
+    hist3 = bg3.NewHist( 1.0 )
     # PHIL Rejection levels are not correct in this method
     convolved = ConvolveReject( hist1, hist2, rejection )
     convolved = ConvolveReject( convolved, hist3, rejection )

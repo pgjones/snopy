@@ -68,11 +68,13 @@ class Spectra( object ):
         return
     def ImportSpectra( self, fileName ):
         """ Import the spectra from an appropriate ROOT file."""
-        rootFile = ROOT.TFile( fileName, "READ" )
-        combinedHist = ROOT.TH2D( rootFile.Get( "Spectra" ) )
-        self._RadialHist = combinedHist.ProjectionY( self._Name + "_r" )
+        rootFile = TFile( fileName, "READ" )
+        combinedHist = TH2D( rootFile.Get( "Spectra" ) )
+        self._RadialHist = combinedHist.ProjectionY( self._Name + "_r" ).Clone( self._Name + "_r" )
         self._RadialHist.Scale( 1.0 / self._RadialHist.GetSumOfWeights() )
-        self._PreHist = combinedHist.ProjectionX( self._Name )
+        self._RadialHist.SetDirectory( 0 )
+        self._PreHist = combinedHist.ProjectionX( self._Name ).Clone( self._Name )
         self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
+        self._PreHist.SetDirectory( 0 )
         rootFile.Close()
         return

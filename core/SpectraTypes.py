@@ -60,5 +60,7 @@ SpectraTypes["130Te0v"] = TeSignal.S130Te
 # Register Chain Backgrounds
 import UraniumBackgrounds
 SpectraTypes["238UChain"] = UraniumBackgrounds.BUraniumChain
+SpectraTypes["238U"] = UraniumBackgrounds.B238U
 import ThoriumBackgrounds
 SpectraTypes["232ThChain"] = ThoriumBackgrounds.BThoriumChain
+SpectraTypes["232Th"] = ThoriumBackgrounds.B232Th

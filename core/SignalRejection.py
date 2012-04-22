@@ -2,6 +2,7 @@
 # Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk>
 # All events can be rejected as pileup, these classes return the fraction that survive.
 import Spectra
+import ChainSpectra
 import PileupBackground
 import SpectrumUtil
 
@@ -23,6 +24,11 @@ class SignalRejection( object ):
         # This function does not reject pileup spectra
         if isinstance( spectra, PileupBackground.PileupBackground ):
             return
+        # Chain Spectra must be processed specially
+        if isinstance( spectra, ChainSpectra.ChainSpectra ):
+            for bg in spectra.GetBackgrounds():
+                self.ProcessSpectra( bg )
+            return # Do not Continue if chain spectra
         hist = spectra.GetHist()
         # Reduce the count by the type dependent survival factor
         hist.Scale( self.GetTypeSurvivalFactor( spectra.GetName() ) )

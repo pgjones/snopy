@@ -28,17 +28,18 @@ class IterativeLevel( ConfidenceLevel ):
         lowerSignal = 0.0       # Current lower limit on the signal 
         signal = lowerSignal + ( upperSignal - lowerSignal ) / 2.0 # Current signal test value
         results = self._Sigmas[:] # Initialise a results list
-        # Must iterate from lowest sigma first, for efficiency
+        # Must iterate from highest sigma first (max signal), for efficiency
         LogUtil.Log( "CL:%f" % self._CL, 2 )
         for sigma in sorted( self._Sigmas ):
             LogUtil.Log( "Sigma:%i" % sigma, 2 )
             while True:
-                LogUtil.Log( "Signal:%i" % signal, 3 )
+                LogUtil.Log( "Signal:%f" % signal, 3 )
+                LogUtil.Log( "Upper Signal:%f,Lower Signal:%f" % (upperSignal, lowerSignal), 3 )
                 self._SignalHist.Scale( signal / self._SignalHist.GetSumOfWeights() )
                 cl = self._GetCL( sigma )
                 LogUtil.Log( "CL:%f" % cl, 3 )
                 # is CL the level required?
-                if math.fabs( cl - 1.0 + self._CL ) < ( 1.0 - self._CL ) / 100:
+                if math.fabs( cl - 1.0 + self._CL ) < ( 1.0 - self._CL ) / 100 or upperSignal - lowerSignal < 0.1:
                     results[ results.index( sigma ) ] = signal
                     # Calculate for next sigma, keep signal limits for efficiency
                     upperSignal = signal

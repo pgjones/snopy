@@ -2,6 +2,7 @@
 # Author P G Jones - 18/01/2012 <p.g.jones@qmul.ac.uk>
 # Applies the energy resolution smearing
 import Spectra
+import ChainSpectra
 import SpectrumUtil
 import math
 
@@ -10,6 +11,11 @@ class EnergyResolution( object ):
     def ProcessSpectra( self, spectra ):
         """ Process the spectra by convolving in the energy resolution. """
         assert( isinstance( spectra, Spectra.Spectra ) )
+        # Chain Spectra must be processed specially
+        if isinstance( spectra, ChainSpectra.ChainSpectra ):
+            for bg in spectra.GetBackgrounds():
+                self.ProcessSpectra( bg )
+            return # Do not Continue if chain spectra
         hist = spectra.GetHist()
         convolved = SpectrumUtil.RawSpectrum( hist.GetName() )
         # C( b1 ) = sum( b2 ) h( b2 ) * g[b2]( b1 - b2 )

@@ -3,6 +3,7 @@
 # Revision         - 26/03/2012 <p.g.jones@qmul.ac.uk> : New Spectra structure, allows externals
 # Chain spectra together to form a single background with all backgrounds in equilibrium
 import Spectra
+import SpectrumUtil
 
 class ChainSpectra( Spectra.Spectra ):
     """ Add multiple backgrounds to form a chain in equilibirium."""
@@ -25,6 +26,9 @@ class ChainSpectra( Spectra.Spectra ):
         self._Backgrounds.append( bg )
         self._Fractions.append( fraction )
         return
+    def GetBackgrounds( self ):
+        """ Return the backgrounds."""
+        return self._Backgrounds
     def GetActivity( self ):
         """ Return the chain activity, head of the chain."""
         return self._Backgrounds[0].GetActivity()
@@ -42,6 +46,19 @@ class ChainSpectra( Spectra.Spectra ):
         super( ChainSpectra, self ).Initialise()
         for bg in self._Backgrounds:
             bg.Initialise()
-        for bg, fraction in zip( self._Backgrounds, self._Fractions ):
-            self._PreHist.Add( bg.GetHist(), fraction )
         return
+    # Overloaded methods to get the hists (from the component bgs)
+    def GetHist( self ):
+        """ This should not be called on a chain spectra."""
+        raise Exception( "ChainSpectra::GetHist should not be called" )
+    def SetHist( self, hist ):
+        """ This should not be called on a chain spectra."""
+        raise Exception( "ChainSpectra::SetHist should not be called" )
+    def NewHist( self, numYears ):
+        """ Return the spectra histogram scaled to the number of events for numYears of runtime."""
+        hist = SpectrumUtil.RawSpectrum( self._Name )
+        for bg in self._Backgrounds:
+            bgHist = bg.GetHist().Clone( bg.GetName() )
+            bgHist.Scale( self.GetActivity() * numYears )
+            hist.Add( bgHist )
+        return hist
