@@ -57,8 +57,8 @@ class ChainSpectra( Spectra.Spectra ):
     def NewHist( self, numYears ):
         """ Return the spectra histogram scaled to the number of events for numYears of runtime."""
         hist = SpectrumUtil.RawSpectrum( self._Name )
-        for bg in self._Backgrounds:
+        for bg, fraction in zip( self._Backgrounds, self._Fractions ):
             bgHist = bg.GetHist().Clone( bg.GetName() )
-            bgHist.Scale( self.GetActivity() * numYears )
+            bgHist.Scale( self.GetActivity() * numYears * fraction )
             hist.Add( bgHist )
         return hist
