@@ -59,6 +59,6 @@ class ChainSpectra( Spectra.Spectra ):
         hist = SpectrumUtil.RawSpectrum( self._Name )
         for bg, fraction in zip( self._Backgrounds, self._Fractions ):
             bgHist = bg.GetHist().Clone( bg.GetName() )
-            bgHist.Scale( self.GetActivity() * numYears * fraction )
+            bgHist.Scale( self.GetActivity() * numYears * fraction * bg.GetFiducialFraction() )
             hist.Add( bgHist )
         return hist

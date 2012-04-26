@@ -2,6 +2,7 @@
 # Author P G Jones - 07/02/2012 <p.g.jones@qmul.ac.uk> : First Revision
 # Revision         - 26/03/2012 <p.g.jones@qmul.ac.uk> : New Spectra structure
 # InternalBackgrounds from the 232Th Chain
+# This is interesting http://home.fnal.gov/~hannahnp/decay/Th232.html
 import InternalBackground
 import SpectrumUtil
 import ChainSpectra
@@ -30,6 +31,7 @@ class B232Th( InternalBackground.InternalBackground ):
         super( B232Th, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 4.082, 0.779 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 4.018, 0.064, 0.221 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
     
 class B228Ra( InternalBackground.InternalBackground ):
@@ -44,6 +46,7 @@ class B228Ra( InternalBackground.InternalBackground ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B228Ra, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.039, 0.007, 1.0 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B228Ac( InternalBackground.InternalBackground ):
@@ -70,6 +73,7 @@ class B228Ac( InternalBackground.InternalBackground ):
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.403, 1.724, 0.016 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.439, 1.688, 0.026 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.445, 1.682, 0.012 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B228Th( InternalBackground.InternalBackground ):
@@ -85,6 +89,7 @@ class B228Th( InternalBackground.InternalBackground ):
         super( B228Th, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.520, 0.711 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 5.436, 0.084, 0.282 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B224Ra( InternalBackground.InternalBackground ):
@@ -100,6 +105,7 @@ class B224Ra( InternalBackground.InternalBackground ):
         super( B224Ra, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 5.789, 0.95 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 5.548, 0.241, 0.05 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
     
 class B220Rn( InternalBackground.InternalBackground ):
@@ -114,6 +120,7 @@ class B220Rn( InternalBackground.InternalBackground ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B220Rn, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.404, 1.0 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B216Po( InternalBackground.InternalBackground ):
@@ -128,6 +135,7 @@ class B216Po( InternalBackground.InternalBackground ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B216Po, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.906, 1.0 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B212Pb( InternalBackground.InternalBackground ):
@@ -144,6 +152,7 @@ class B212Pb( InternalBackground.InternalBackground ):
         self._PreHist.Add( SpectrumUtil.BetaDecay( 0.574, 0.123 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.335, 0.239, 0.825 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.159, 0.415, 0.05 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B212Bi( InternalBackground.InternalBackground ):
@@ -163,6 +172,7 @@ class B212Bi( InternalBackground.InternalBackground ):
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 0.633, 1.621, 0.019 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecayWithGamma( 6.167, 0.04, 0.25 ) )
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 6.207, 0.0975 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B212Po( InternalBackground.InternalBackground ):
@@ -177,6 +187,7 @@ class B212Po( InternalBackground.InternalBackground ):
         """ Set the PreHist spectra to a years unprocessed events."""
         super( B212Po, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.AlphaDecay( 8.954, 1.0 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return
 
 class B208Tl( InternalBackground.InternalBackground ):
@@ -192,5 +203,6 @@ class B208Tl( InternalBackground.InternalBackground ):
         super( B208Tl, self ).Initialise()
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.293, 3.708, 0.245 ) )
         self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.526, 3.475, 0.218 ) )
-        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.803, 3.198, 0.487 ) )                
+        self._PreHist.Add( SpectrumUtil.BetaDecayWithGamma( 1.803, 3.198, 0.487 ) )
+        self._PreHist.Scale( 1.0 / self._PreHist.GetSumOfWeights() )
         return

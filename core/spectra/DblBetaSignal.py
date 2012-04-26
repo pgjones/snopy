@@ -35,15 +35,14 @@ class DblBetaSignal( Spectra.Spectra ):
         return [ self._ScintTargetFraction, self._NdTargetFraction, self._TeTargetFraction ]
     def GetActivity( self ):
         """ Activity per year."""
-        mass = self._DetectorInfo._NdMass * self._NdTargetFraction \
-            + self._DetectorInfo._TeMass * self._TeTargetFraction
+        mass = self._DetectorInfo._NdMass * self._NdTargetFraction + self._DetectorInfo._TeMass * self._TeTargetFraction
         activity = mass * math.log(2) / ( Constants.kU * self._AtomicMass * self.GetHalfLife() )
         return activity
-    # Very useful singal converters
+    # Very useful signal converters
     def SignalToHalfLife( self, activity ):
-        """ Returns the half life given an activity in years."""
-        mass = self._DetectorInfo._NdMass * self._NdTargetFraction \
-            + self._DetectorInfo._TeMass * self._TeTargetFraction
+        """ Returns the half life given an observed activity in years."""
+        mass = self._DetectorInfo._NdMass * self._NdTargetFraction + self._DetectorInfo._TeMass * self._TeTargetFraction
+        mass *= self.GetFiducialFraction()
         halfLife = mass * math.log(2) / ( Constants.kU * self._AtomicMass * activity )
         return halfLife
     def SignalToMass( self, activity ):

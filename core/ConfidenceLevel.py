@@ -39,7 +39,7 @@ class IterativeLevel( ConfidenceLevel ):
                 cl = self._GetCL( sigma )
                 LogUtil.Log( "CL:%f" % cl, 3 )
                 # is CL the level required?
-                if math.fabs( cl - 1.0 + self._CL ) < ( 1.0 - self._CL ) / 100 or upperSignal - lowerSignal < 0.1:
+                if math.fabs( cl - 1.0 + self._CL ) < ( 1.0 - self._CL ) / 100 or upperSignal - lowerSignal < 0.0001:
                     results[ results.index( sigma ) ] = signal
                     # Calculate for next sigma, keep signal limits for efficiency
                     upperSignal = signal
