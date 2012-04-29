@@ -46,7 +46,7 @@ class Spectra( object ):
         hist = self.GetHist()
         newHist = hist.Clone( self._Name )
         newHist.SetDirectory(0)
-        newHist.Scale( numYears * self.GetActivity() * self.GetFiducialFraction() / newHist.GetSumOfWeights() )
+        newHist.Scale( numYears * self.GetActivity() * self.GetFiducialFraction() )
         return newHist
     def SetHist( self, hist ):
         """ Set the spectra histogram, only the PostHist can be set."""

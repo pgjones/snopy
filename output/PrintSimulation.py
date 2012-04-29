@@ -2,6 +2,7 @@
 # Author P G Jones - 02/02/2012 <p.g.jones@qmul.ac.uk>
 # Prints the spectrum information
 import Simulation
+import ChainSpectra
 import LogUtil
 
 class PrintSimulation( object ):
@@ -17,20 +18,22 @@ class PrintSimulation( object ):
         print LogUtil.kHeader + "Backgrounds" + LogUtil.kEnd
         print "Name & Activity"
         for index, bg in enumerate( self._Simulation.GetBackgrounds() ):
-            hist = bg.NewHist( numYears )
-            countsInDomain = hist.Integral( hist.GetXaxis().FindBin( eLow ), hist.GetXaxis().FindBin( eHigh ) )
-            if countsInDomain > 1:
-                #if index % 3 != 0:
-                #    print "& ",
-                print bg.GetName(),
-                print " & %.2e" % bg.GetActivity(),
-                #if index % 3 == 2:
-                #    print "\\\\"
-                #else:
-                print " "
+            if isinstance( bg, ChainSpectra.ChainSpectra ):
+                for hist in bg.NewHistList( numYears ):
+                    print "\t",
+                    self.PrintHistInfo( hist, eLow, eHigh )
+            else:
+                hist = bg.NewHist( numYears )
+                self.PrintHistInfo( hist, eLow, eHigh )
         print LogUtil.kHeader + "Signal" + LogUtil.kEnd
         print "Name & Activity"
-        print self._Simulation.GetSignal().GetName(),
-        print " & %.2e" % self._Simulation.GetSignal().GetActivity()
+        self.PrintHistInfo( self._Simulation.GetSignal().NewHist( numYears ), eLow, eHigh )
         return
-
+    def PrintHistInfo( self, hist, eLow, eHigh ):
+        """ Print the relevant info from the histogram."""
+        countsInDomain = hist.Integral( hist.GetXaxis().FindBin( eLow ), hist.GetXaxis().FindBin( eHigh ) )
+        print hist.GetName(),
+        print " & %.2e" % countsInDomain,
+        print " "
+        return
+        

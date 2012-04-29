@@ -71,7 +71,7 @@ class PlotLimits( object ):
         self._FrameGraph.SetPoint( 1, maxYear, maxLimit )
         self._FrameGraph.Draw( "AP" )
         self._FrameGraph.GetXaxis().SetTitle( "Livetime Years [yr]." )
-        self._FrameGraph.GetYaxis().SetTitle( "90% CL Limit [meV]" )
+        self._FrameGraph.GetYaxis().SetTitle( "90% CL Limit [eV]" )
         self._Graphs.reverse()
         for index, graph in enumerate( self._Graphs ):
             # Set the plot colour

@@ -47,6 +47,14 @@ class ChainSpectra( Spectra.Spectra ):
         for bg in self._Backgrounds:
             bg.Initialise()
         return
+    def NewHistList( self, numYears ):
+        """ Return the spectra histograms scaled to the number of events for numYears of livetime."""
+        hists = []
+        for bg, fraction in zip( self._Backgrounds, self._Fractions ):
+            bgHist = bg.GetHist().Clone( bg.GetName() )
+            bgHist.Scale( self.GetActivity() * numYears * fraction * bg.GetFiducialFraction() )
+            hists.append( bgHist )
+        return hists
     # Overloaded methods to get the hists (from the component bgs)
     def GetHist( self ):
         """ This should not be called on a chain spectra."""
@@ -55,7 +63,7 @@ class ChainSpectra( Spectra.Spectra ):
         """ This should not be called on a chain spectra."""
         raise Exception( "ChainSpectra::SetHist should not be called" )
     def NewHist( self, numYears ):
-        """ Return the spectra histogram scaled to the number of events for numYears of runtime."""
+        """ Return the spectra histogram scaled to the number of events for numYears of livetime."""
         hist = SpectrumUtil.RawSpectrum( self._Name )
         for bg, fraction in zip( self._Backgrounds, self._Fractions ):
             bgHist = bg.GetHist().Clone( bg.GetName() )
