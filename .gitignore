@@ -1,0 +1,4 @@
+# Ignore backup, saved and compiled python files
+*~
+*.pyc
+*.pkl
