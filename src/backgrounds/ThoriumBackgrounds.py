@@ -22,7 +22,7 @@ class B232Th( InternalBackground.InternalBackground ):
         super( B232Th, self ).__init__( "232Th" )
         self._ScintTargetFraction = 6.8e-18 # DocDB-507-v2
         self._NdTargetFraction = 1.0e-14
-        self._TeTargetFraction = 1.0e-14 # GUESS
+        self._TeTargetFraction = 0.0 # S Biller
         self._HalfLife = 1.405e10
         self._AtomicMass = 232
         return

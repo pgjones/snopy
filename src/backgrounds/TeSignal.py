@@ -14,7 +14,7 @@ class S130Te( DblBetaSignal.DblBetaSignal ):
         super( S130Te, self ).__init__( "130Te0v" )
         self._TeTargetFraction = 0.345 # 34.5% Natural abundance
         self._mass = 320e-3 # eV, Kalpdor claim
-        self._NME = 3.372 # Conservative IBM
+        self._NME = 4.059 # S Biller recommendation
         self._G = 4.09e-14
         self._AtomicMass = 130
         return

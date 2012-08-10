@@ -20,7 +20,7 @@ class B238U( InternalBackground.InternalBackground ):
         super( B238U, self ).__init__( "238U" )
         self._ScintTargetFraction = 1.6e-17 # DocDB-507-v2
         self._NdTargetFraction = 1.0e-15
-        self._TeTargetFraction = 1.0e-15 # GUESS
+        self._TeTargetFraction = 0.0 # S Biller
         self._HalfLife = 4.468e9
         self._AtomicMass = 238
         return

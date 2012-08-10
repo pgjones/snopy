@@ -27,6 +27,6 @@ class SolarSignal( Spectra.Spectra ):
     # Now the functions that should be overloaded
     def Initialise( self ):
         """ By default set the radial hist to r^3 for internals."""
-        super( SolarSignal, self).Initialise()
+        super( SolarSignal, self ).Initialise()
         self._RadialHist = RadialUtil.StandardInternal()
         return

@@ -16,10 +16,10 @@ def RawSpectrum( histName ):
 def StandardInternal():
     """ Return the standard r^3 internal spectra radial histogram."""
     global NBins, LowBin, HighBin
-    function = TF1( "r^3", "[0]*x^3", LowBin, HighBin )
-    function.SetParameter( 0, 1.0 )
-    spectrum = TH1D( "r^3", "[0]*x^3", NBins, LowBin, HighBin )
-    spectrum.Add( function )
-    spectrum.Scale( 1.0 / spectrum.GetSumOfWeights() ) # Normalise 
+    spectrum = TH1D( "r^3", "r^3", NBins, LowBin, HighBin )
+    for iBin in range( 1, NBins + 1 ):
+        r = spectrum.GetBinLowEdge( iBin )
+        dR = spectrum.GetBinWidth( iBin )
+        spectrum.SetBinContent( iBin, ( pow( dR, 3.0 ) + 3.0 * dR * r * ( r + dR ) ) / pow( HighBin, 3.0 ) )
     spectrum.SetDirectory(0) # Stop ROOT trying to memory manage it
     return spectrum
