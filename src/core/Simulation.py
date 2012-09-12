@@ -15,10 +15,11 @@ import Serialisable
 
 class Simulation( Serialisable.Serialisable ):
     """ Simulation object, holds all the spectra, processing types, global variables such as Nd loading and pileup window etc..."""
-    def __init__( self, ndLoading = 0.0, teLoading = 0.0, fiducialRadius = 6000.0 ):
+    def __init__( self, ndLoading = 0.0, teLoading = 0.0, # %
+                  fiducialRadius = 6000.0, #mm
+                  scintMass=774000 ): #Kg
         """ Constructor, set default objects."""
         self._PileupWindow = 400.0 # ns
-        scintMass = 774000.0 # Kg
         ndMass = ndLoading / 100.0 * scintMass # e.g 0.1% loading default
         teMass = teLoading / 100.0 * scintMass # e.g 0.1% loading default
         self._DetectorInfo = DetectorInfo.DetectorInfo( scintMass,
@@ -38,6 +39,9 @@ class Simulation( Serialisable.Serialisable ):
             LogUtil.Log( "Unknown energy resolution type:" + str( type( energyResolution ) ), -2 )
         self._EnergyResolution = energyResolution
         return
+    def GetEnergyResolution( self ):
+        """ Return the energy resolution."""
+        return self._EnergyResolution
 
     def AddBackground( self, background ):
         """ Add a new background. """

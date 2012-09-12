@@ -4,6 +4,7 @@
 import Simulation
 import ChainSpectra
 import LogUtil
+import EnergyResolution
 
 class PrintSimulation( object ):
     """ Prints the spectra in a simulation under varying options."""
@@ -13,6 +14,12 @@ class PrintSimulation( object ):
             LogUtil.Log( "Simultion is of incorrect type:" + str( type( simulation ) ), -2 )
         self._Simulation =  simulation
         return
+    def PrintSigma( self, energy, numSigma ):
+        """ Prints the counts in numSigma about the energy."""
+        sigma  = self._Simulation.GetEnergyResolution().GetSigma( energy )
+        self.Print( 1.0, energy - numSigma * sigma, energy + numSigma * sigma )
+        return
+
     def Print( self, numYears, eLow, eHigh ):
         """ Prints the spectra information."""
         print LogUtil.kHeader + "Backgrounds" + LogUtil.kEnd
