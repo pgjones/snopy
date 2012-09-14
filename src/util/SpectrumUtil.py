@@ -4,9 +4,9 @@ from ROOT import TH1D
 import math
 import AlphaQuenchUtil
 
-NBins   = 600 # Number of histogram bins
+NBins   = 2400 # Number of histogram bins
 LowBin  = 0.0 # Low end of the histogram energy domain [MeV]
-HighBin = 6.0 # High end of the histogram energy domain [MeV]
+HighBin = 24.0 # High end of the histogram energy domain [MeV]
 
 kElectronMass = 0.511 # MeV mass of electron
 

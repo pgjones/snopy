@@ -47,7 +47,8 @@ class SB8( SolarSignal.SolarSignal ):
     """ B8 signal/background definition."""
     def __init__( self ):
         super( SB8, self ).__init__( "B8" )
-        self._EventsPerKtYear = 1837 # DocDB-83
+        #self._EventsPerKtYear = 1837 # DocDB-83
+        self._EventsPerKtYear = 2099 # Nasim ace
         return
     def Initialise( self ):
         """ Set the PreHist spectra to a years unprocessed events."""

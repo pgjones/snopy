@@ -15,7 +15,7 @@ class S150Nd( DblBetaSignal.DblBetaSignal ):
         self._NdTargetFraction = 0.056 # 5.6% Natural abundance
         self._mass = 320e-3 # eV, Kalpdor claim
         self._NME = 2.3 # Conservative IBM
-        self._G = 19.2e-14 # Nasim: 26.9e-14
+        self._G = 15.4e-14 # Dueck 19.2e-14 # Nasim: 26.9e-14
         self._AtomicMass = 150
         return
     def Initialise( self ):

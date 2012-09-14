@@ -5,6 +5,7 @@
 SpectraTypes = {} 
 SolarSigList = {}
 NdBGList = {} # Not the chains
+TeBGList = {} # Not the chains
 ScintBGList = {} # Not the chains
 
 # Register scint backgrounds
@@ -40,6 +41,7 @@ NdBGList["235U"]  = NdBackgrounds.B235U
 # Register Te backgrounds
 import TeBackgrounds
 SpectraTypes["130Te2v"] = TeBackgrounds.B130Te
+TeBGList["130Te2v"] = TeBackgrounds.B130Te
 # Register solar backgrounds/signals
 import SolarSignals
 SpectraTypes["PEP"] = SolarSignals.SPEP
