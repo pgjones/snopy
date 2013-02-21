@@ -34,7 +34,7 @@ class DblBetaLimitPlotter(object):
         plot = ROOT.TGraph()
         for index, year_limit in enumerate(self._limits.iter_limits()):
             plot.SetPoint(index, year_limit[0], self._convert_to_half_life(isotope_mass, 
-                                                                           year_limit[1] / year_limit[0]))
+                                                                           year_limit[1][2] / year_limit[0]))
         self._plots.append(plot)
         self._plot()
     def plot_mass(self, isotope_mass, G, NME):
@@ -43,7 +43,7 @@ class DblBetaLimitPlotter(object):
         plot = ROOT.TGraph()
         for index, year_limit in enumerate(self._limits.iter_limits()):
             plot.SetPoint(index, year_limit[0], self._convert_to_mass(isotope_mass, G, NME, 
-                                                                      year_limit[1] / year_limit[0]))
+                                                                      year_limit[1][2] / year_limit[0]))
         self._plots.append(plot)
         self._plot()
     ################################################################################################

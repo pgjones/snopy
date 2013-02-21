@@ -1,5 +1,6 @@
 #include <TH2D.h>
 #include <TFile.h>
+#include <TH1D.h>
 
 TH2D* 
 GaussianXConvolve( TH2D* result_spectrum, TH2D* raw_spectrum, TH2D* sigma )
@@ -21,8 +22,25 @@ GaussianXConvolve( TH2D* result_spectrum, TH2D* raw_spectrum, TH2D* sigma )
           result_spectrum->SetBinContent( b1, binR, h );
         }
     }
-  TFile a("Temp.root", "RECREATE");
-  result_spectrum->Write();
-  a.Close();
   return result_spectrum;
+}
+
+TH1D*
+ConvolveReject( TH1D* convolved, TH1D* spectra1, TH1D* spectra2 )
+{
+  // (c)(b1) = sum(b2) h1(b2) * h2( b1 - b2 )                                                                                                   
+  for( int b1 = 1; b1 <= convolved->GetNbinsX(); b1++ )
+    {
+      double h = 0.0;
+      for( int b2 = 1; b2 <= convolved->GetNbinsX(); b2++ )
+        {
+          int diff = b1 - b2;
+          if( diff >= 1 && diff <= convolved->GetNbinsX() )
+            {
+              h = h + spectra1->GetBinContent( b2 ) * spectra2->GetBinContent( diff );
+              convolved->SetBinContent( b1, h );
+            }
+        }
+    }
+  return convolved;
 }

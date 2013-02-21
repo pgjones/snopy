@@ -21,6 +21,10 @@ class DataSet(object):
         if not self._check_type(background):
             raise Exception("Wrong data set type.")
         self._backgrounds.append(background)
+    def add_backgrounds(self, backgrounds):
+        """ Add a list of backgrounds to the data set."""
+        for background in backgrounds:
+            self.add_background(background)
     def set_signal(self, signal):
         """ Set the data set signal."""
         if not self._check_type(signal):

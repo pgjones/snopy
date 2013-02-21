@@ -18,8 +18,8 @@ class TLimit(object):
         """ Calculate the limit."""
         signal = detected_data_set.get_signal()
         background = detected_data_set.get_summed_background()
-        max_signal = background.Integral(signal.FindFirstBinAbove(0.1),
-                                         signal.FindLastBinAbove(0.1))
+        max_signal = background.Integral(signal.FindFirstBinAbove(signal.GetMaximum() / 1000.0),
+                                         signal.FindLastBinAbove(signal.GetMaximum() / 1000.0))
         upper_signal = max_signal # Current upper limit on the signal
         lower_signal = 0.0       # Current lower limit on the signal 
         current_signal = lower_signal + (upper_signal - lower_signal) / 2.0 # Test signal value
@@ -45,7 +45,8 @@ class TLimit(object):
                     else:
                         lower_signal = current_signal
                 current_signal = lower_signal + (upper_signal - lower_signal) / 2.0
-        return result
+        print results
+        return results
 
 class TFeldmanCousins(object):
     def __init__(self, low_energy, high_energy, cl=0.9):

@@ -12,7 +12,7 @@ class SignalLimitSet(object):
     def __init__(self):
         """ Initialise this limit set."""
         self._years = []
-        self._limit = [[]]
+        self._limit = []
     def add(self, year, limits):
         """ Add a new limits."""
         self._years.append(year)

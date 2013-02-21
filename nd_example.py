@@ -26,6 +26,7 @@ if not os.path.isfile("detected.pkl"):
     raw_data = nd_generator.generate()
     print "Finished generation in", time.clock() - start_time, "s"
     detector_sim = simulation.Simulation("Default Sim", raw_data)
+    detector_sim.set_pileup(True)
     detector_sim.set_energy_resolution(energy_resolution.NhitResolution(400.0))
     detector_sim.set_fiducial_rejection(signal_rejection.NoRejection())
     detector_sim.set_rejection(fiducial_rejection.RadialFixedRejection(4500.0))
@@ -36,9 +37,8 @@ if not os.path.isfile("detected.pkl"):
 else:
     with open("detected.pkl", "r") as file_:
         detected_data = pickle.load(file_)
-plotter = plot_data.DetectedDataPlotter(detected_data, None)
+plotter = plot_data.DetectedDataPlotter(detected_data, detected_data.get_signal())
 plotter.plot(0.0, 6.0)
-
 if not os.path.isfile("limits.pkl"):
     limit_calc = limit_calculator.LimitCalculator(detected_data, limit_techniques.TLimit())#TFeldmanCousins(3.0,3.5))
     limit_set = limit_calc.calculate()
@@ -49,4 +49,4 @@ else:
         limit_set = pickle.load(file_)
 limit_plotter = plot_limits.DblBetaLimitPlotter(150, limit_set, None)
 limit_plotter.plot_mass(774000 * 0.01 * 0.056, 19.2e-14, 2.4)
-raw_input("A")
+raw_input("B")
