@@ -27,6 +27,7 @@ class NdDataGen(object):
                                   "40K" : 1.3e-18,
                                   "39Ar" : 2.75e-24,
                                   "85Kr" : 2.4e-25 }
+        self._solar_backgrounds = [ "PEP", "CNO", "B8", "Be7" ]
         self._loading = loading
         self._scint_mass = scint_mass
         self._nd_mass = loading / 100.0 * scint_mass
@@ -48,7 +49,6 @@ class NdDataGen(object):
         gen_set = data_set.RawDataSet("Nd%d" % self._loading)
         # Scintillator backgrounds
         for isotope, fraction in self._scint_fractions.iteritems():
-            break
             energy_spectrum = generators.generators[isotope].generate(self._scint_mass * fraction)
             # Apply an internal radial dependence
             spectrum = spectrum_util.apply_radial_spectrum(energy_spectrum, 
@@ -57,6 +57,13 @@ class NdDataGen(object):
         # Now Isotope backgrounds
         for isotope, fraction in self._nd_fractions.iteritems():
             energy_spectrum = generators.generators[isotope].generate(self._nd_mass * fraction)
+            # Apply an internal radial dependence
+            spectrum = spectrum_util.apply_radial_spectrum(energy_spectrum, 
+                                                           spectrum_util.internal(self._radius))
+            gen_set.add_background(spectrum)
+        # Now Solar backgrounds
+        for isotope in self._solar_backgrounds:
+            energy_spectrum = generators.generators[isotope].generate(self._scint_mass)
             # Apply an internal radial dependence
             spectrum = spectrum_util.apply_radial_spectrum(energy_spectrum, 
                                                            spectrum_util.internal(self._radius))

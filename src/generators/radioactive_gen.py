@@ -18,7 +18,7 @@ class RadioactiveGen(generator.Generator):
         self._atomic_mass = atomic_mass
         self._half_life = half_life
     def generate(self, mass):
-        """ Return a RawData object for this background/signal."""
+        """ Return a energy spectrum for this background/signal."""
         spectrum = self._generate()
         spectrum.Scale(self.get_activity(mass))
         return spectrum
