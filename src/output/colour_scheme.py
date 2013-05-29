@@ -10,15 +10,15 @@ import ROOT
 
 class ColourScheme(object):
     """ Returns the ROOT colour given a background name."""
-    def GetColour(self, bgName):
+    def get_colour(self, bgName):
         """ Default return black."""
         return ROOT.kBlack
 
-class DefaultColours(ColourUtil):
+class DefaultColours(ColourScheme):
     """ Default colour scheme, chosen by Phil."""
     def __init__(self):
         """ Set the default colour list."""
-        self._Colours = { "Generic" : ROOT.kBlack,
+        self._colours = { "Generic" : ROOT.kBlack,
                           "150Nd0v" : ROOT.kRed,
                           "150Nd2v" : ROOT.kBlue,
                           "130Te0v" : ROOT.kRed,
@@ -39,23 +39,23 @@ class DefaultColours(ColourUtil):
                           "235U"    : ROOT.kMagenta + 3,
                           "232Th Chain"   : ROOT.kSpring,
                           "238U Chain"    : ROOT.kPink + 2 }
-        self._FillColours = { 0 : ROOT.kGreen,
-                              1 : ROOT.kBlue,
-                              2 : ROOT.kGreen,
-                              3 : ROOT.kWhite }
-    def GetColour(self, bgName):
+        self._fill_colours = { 0 : ROOT.kGreen,
+                               1 : ROOT.kBlue,
+                               2 : ROOT.kGreen,
+                               3 : ROOT.kWhite }
+    def get_colour(self, bgName):
         """ Return the colour by bgName."""
         assert(isinstance(bgName, basestring))
         elements = bgName.split("+")
-        colour = self._Colours[ "Generic" ]
-        if elements[0] in self._Colours:
-            colour = self._Colours[ elements[0] ]
+        colour = self._colours[ "Generic" ]
+        if elements[0] in self._colours:
+            colour = self._colours[ elements[0] ]
         colour += len(elements) - 1
         return colour
-    def GetFillColour(self, index):
+    def get_fill_colour(self, index):
         """ Return the colour by drawing order (index, 0 is first)."""
-        if index in self._FillColours:
-            return self._FillColours[ index ]
+        if index in self._fill_colours:
+            return self._fill_colours[ index ]
         else:
             return ROOT.kBlack
         
@@ -63,7 +63,7 @@ class SolarColours(DefaultColours):
     """ Default Solar colour scheme, chosen by Helen & Phil"""
     def __init__(self):
         """ Set the solar colour list."""
-        self._Colours = { "Generic" : ROOT.kBlack,
+        self._colours = { "Generic" : ROOT.kBlack,
                           "B8"      : ROOT.kBlue,
                           "PEP"     : ROOT.kRed,
                           "CNO"     : ROOT.kGreen,
@@ -74,4 +74,3 @@ class SolarColours(DefaultColours):
                           "40K"     : ROOT.kOrange + 1,
                           "232Th Chain"   : ROOT.kSpring + 2,
                           "238U Chain"    : ROOT.kPink + 2 }
-        return

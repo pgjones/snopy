@@ -54,7 +54,7 @@ class DataPlotter(object):
             print bg.GetName()
             hist = bg
             hist.Draw("SAME")
-            #hist.SetLineColor(self._ColourScheme.GetColour(bg.GetName()))
+            hist.SetLineColor(self._colours.get_colour(bg.GetName()))
             self._histograms.append(hist)
             self._summed_bg.Add(hist)
             # Add to legend if visible in the energy domain
@@ -67,7 +67,7 @@ class DataPlotter(object):
         frame.GetYaxis().SetRangeUser(1e-1, maxCounts)
         # Draw the signal first
         self._sum_bg_signal.Add(self._summed_bg)
-        #self._SignalHist.SetLineColor(self._ColourScheme.GetColour(self._signal))
+        self._signal.SetLineColor(self._colours.get_colour(self._signal.GetName()))
         self._signal.Draw("SAME")
         self._legend.AddEntry(self._signal, self._signal.GetName() + " : Sig", "l")
         self._histograms.append(self._signal)
