@@ -8,7 +8,7 @@
 ####################################################################################################
 import chain_gen
 import radioactive_gen
-import spectrum_util
+import decay_util
 
 class Gen232Th(chain_gen.ChainGen):
     """ Thorium 232 background definition."""

@@ -22,11 +22,15 @@ class NdDataGen(object):
                                "147Sm" : 5e-7,
                                "148Sm" : 5e-7,
                                "227Ac" : 1e-18,
-                               "235U" : 5e-11 }
+                               "235U" : 5e-11,
+                               "238U" : 1.0e-15,
+                               "232Th" : 1.0e-14}
         self._scint_fractions = { "14C" : 1e-18,
                                   "40K" : 1.3e-18,
                                   "39Ar" : 2.75e-24,
-                                  "85Kr" : 2.4e-25 }
+                                  "85Kr" : 2.4e-25,
+                                  "238U" : 1.6e-17,
+                                  "232Th" : 6.8e-18}
         self._solar_backgrounds = [ "PEP", "CNO", "B8", "Be7" ]
         self._loading = loading
         self._scint_mass = scint_mass

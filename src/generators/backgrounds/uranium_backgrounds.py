@@ -8,7 +8,7 @@
 ####################################################################################################
 import chain_gen
 import radioactive_gen
-import spectrum_util
+import decay_util
 
 class Gen238U(chain_gen.ChainGen):
     """ Uranium 238 background definition."""
