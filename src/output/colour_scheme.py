@@ -37,8 +37,8 @@ class DefaultColours(ColourScheme):
                           "148Sm"   : ROOT.kOrange - 6,
                           "227Ac"   : ROOT.kMagenta,
                           "235U"    : ROOT.kMagenta + 3,
-                          "232Th Chain"   : ROOT.kSpring,
-                          "238U Chain"    : ROOT.kPink + 2 }
+                          "232Th"   : ROOT.kSpring,
+                          "238U"    : ROOT.kPink + 2 }
         self._fill_colours = { 0 : ROOT.kGreen,
                                1 : ROOT.kBlue,
                                2 : ROOT.kGreen,
