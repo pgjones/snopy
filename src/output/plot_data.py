@@ -11,9 +11,10 @@ import spectrum_util
 
 class DataPlotter(object):
     """ Plots a set of TH1Ds."""
-    def __init__(self, backgrounds, signal, colour_scheme):
+    def __init__(self, backgrounds, signal, colour_scheme, line_styles):
         """ Initialise with the set of backgrounds the signal and the colour scheme."""
         self._colours = colour_scheme
+        self._lines = line_styles
         self._backgrounds = backgrounds
         self._signal = signal
     def plot(self, low_energy, high_energy):
@@ -55,6 +56,7 @@ class DataPlotter(object):
             hist = bg
             hist.Draw("SAME")
             hist.SetLineColor(self._colours.get_colour(bg.GetName()))
+            hist.SetLineStyle(self._lines.get_style(bg.GetName()))
             self._histograms.append(hist)
             self._summed_bg.Add(hist)
             # Add to legend if visible in the energy domain
@@ -68,6 +70,7 @@ class DataPlotter(object):
         # Draw the signal first
         self._sum_bg_signal.Add(self._summed_bg)
         self._signal.SetLineColor(self._colours.get_colour(self._signal.GetName()))
+        self._signal.SetLineStyle(self._lines.get_style(self._signal.GetName()))
         self._signal.Draw("SAME")
         self._legend.AddEntry(self._signal, self._signal.GetName() + " : Sig", "l")
         self._histograms.append(self._signal)
@@ -90,19 +93,19 @@ class DataPlotter(object):
 
 class RawDataPlotter(DataPlotter):
     """ Plots a raw data set."""
-    def __init__(self, raw_data_set, colour_scheme):
+    def __init__(self, raw_data_set, colour_scheme, line_style):
         """ Initialise with a raw data set and a colour scheme."""
         backgrounds = []
         for data in raw_data_set.iter_backgrounds():
             backgrounds.append(spectrum_util.flattern(data))
-        super(RawDataPlotter, self).__init__(backgrounds, raw_data_set.get_signal(), colour_scheme)
+        super(RawDataPlotter, self).__init__(backgrounds, raw_data_set.get_signal(), colour_scheme, line_style)
             
 class DetectedDataPlotter(DataPlotter):
     """ Plots a detected data set."""
-    def __init__(self, detected_data_set, colour_scheme):
+    def __init__(self, detected_data_set, colour_scheme, line_style):
         """ Initialise with a detected data set and a colour scheme."""
         backgrounds = []
         for data in detected_data_set.iter_backgrounds():
             backgrounds.append(data)
-        super(DetectedDataPlotter, self).__init__(backgrounds, detected_data_set.get_signal(), colour_scheme)
+        super(DetectedDataPlotter, self).__init__(backgrounds, detected_data_set.get_signal(), colour_scheme, line_style)
             

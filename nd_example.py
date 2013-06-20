@@ -16,6 +16,7 @@ import fiducial_rejection
 import pickle
 import plot_data
 import colour_scheme
+import line_style
 import plot_limits
 import limit_calculator
 import limit_techniques
@@ -38,7 +39,7 @@ if not os.path.isfile("detected.pkl"):
 else:
     with open("detected.pkl", "r") as file_:
         detected_data = pickle.load(file_)
-plotter = plot_data.DetectedDataPlotter(detected_data, colour_scheme.DefaultColours())
+plotter = plot_data.DetectedDataPlotter(detected_data, colour_scheme.DefaultColours(), line_style.Default())
 plotter.plot(0.0, 6.0)
 raw_input("A")
 if not os.path.isfile("limits.pkl"):
