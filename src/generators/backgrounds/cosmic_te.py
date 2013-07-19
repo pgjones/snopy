@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 #
-# te_backgrounds.py
+#cosmic_te .py
 #
 # Generators for backgrounds introduced with teluriumium
 #
-# Author P G Jones - 20/12/2012 <p.g.jones@qmul.ac.uk> : First revision
+# Author P G Jones, E Arushanova  - 20/12/2012 <p.g.jones@qmul.ac.uk> : First revision
 ####################################################################################################
-import radioactive_gen
+import cosmogenic_gen
 import decay_util
 
 
-class Gen60Co(radioactive_gen.RadioactiveGen):
+class Gen60Co(cosmogenic_gen.CosmogenicGen):
     """ Cobalt 60 background definition."""
     def __init__(self):
-        super(Gen60Co, self).__init__("60Co", 60, 5.272)
+        super(Gen60Co, self).__init__("60Co")
     def _generate(self):
         spectrum = decay_util.beta(0.3182, 0.9988)
         spectrum.Add(decay_util.gamma(1.173228, 0.9985))  
@@ -22,10 +22,10 @@ class Gen60Co(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen124Sb(radioactive_gen.RadioactiveGen):
+class Gen124Sb(cosmogenic_gen.CosmogenicGen):
     """ Antimony 124 background definition."""
     def __init__(self):
-        super(Gen124Sb, self).__init__("124Sb", 124, 0.1649)
+        super(Gen124Sb, self).__init__("124Sb")
     def _generate(self):
         spectrum = decay_util.beta_gamma(0.2106, 2.6937, 0.0875)
         spectrum.Add(decay_util.beta_gamma(0.6106, 2.2937, 0.5124))
@@ -38,10 +38,29 @@ class Gen124Sb(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen126mSb(radioactive_gen.RadioactiveGen):
+class Gen127Sb(cosmogenic_gen.CosmogenicGen):
+    """ Antimony 127 background definition."""
+    def __init__(self):
+        super(Gen127Sb, self).__init__("127Sb")
+    def _generate(self):
+        spectrum = decay_util.beta_gamma(0.440, 1.141, 0.0155)
+        spectrum.Add(decay_util.beta_gamma(0.504, 1.077, 0.054))
+        spectrum.Add(decay_util.beta_gamma(0.657, 0.924, 0.013))
+        spectrum.Add(decay_util.beta_gamma(0.796, 0.785, 0.045))
+        spectrum.Add(decay_util.beta_gamma(0.798, 0.783, 0.18))
+        spectrum.Add(decay_util.beta_gamma(0.896, 0.685, 0.358))
+        spectrum.Add(decay_util.beta_gamma(0.950, 0.631, 0.046))
+        spectrum.Add(decay_util.beta_gamma(1.108, 0.473, 0.234))
+        spectrum.Add(decay_util.beta_gamma(1.241, 0.340, 0.017))
+        spectrum.Add(decay_util.beta_gamma(1.493, 0.088, 0.02))
+        spectrum.SetName(self.get_name())
+        return spectrum
+
+
+class Gen126mSb(cosmogenic_gen.CosmogenicGen):
     """ Antimony 126m background definition."""
     def __init__(self):
-        super(Gen126mSb, self).__init__("126mSb", 126, 0.00003643)
+        super(Gen126mSb, self).__init__("126mSb")
     def _generate(self):
         spectrum = decay_util.beta_gamma(0.99, 2.683, 0.013)
         spectrum.Add(decay_util.beta_gamma(1.3, 2.373, 0.034))
@@ -50,10 +69,10 @@ class Gen126mSb(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen126Sb(radioactive_gen.RadioactiveGen):
+class Gen126Sb(cosmogenic_gen.CosmogenicGen):
     """ Antimony 126 background definition."""
     def __init__(self):
-        super(Gen126Sb, self).__init__("126Sb", 126, 0.03384)
+        super(Gen126Sb, self).__init__("126Sb")
     def _generate(self):
         spectrum = decay_util.beta_gamma(0.22, 3.45,  0.0209)
         spectrum.Add(decay_util.beta_gamma(0.48, 3.193,  0.29))
@@ -69,60 +88,60 @@ class Gen126Sb(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen22Na(radioactive_gen.RadioactiveGen):
+class Gen22Na(cosmogenic_gen.CosmogenicGen):
     """ Natrium 22 background definition."""
     def __init__(self):
-        super(Gen22Na, self).__init__("22Na", 22, 2.602)
+        super(Gen22Na, self).__init__("22Na")
     def _generate(self):
         spectrum = decay_util.beta(1.274537, 0.99941)
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen44Sc(radioactive_gen.RadioactiveGen):   
+class Gen44Sc(cosmogenic_gen.CosmogenicGen):   
     """ Scandium 44 background definition."""
     def __init__(self):
-        super(Gen44Sc, self).__init__("44Sc", 44, 0.0004532)
+        super(Gen44Sc, self).__init__("44Sc")
     def _generate(self):
         spectrum = decay_util.gamma(1.15702, 0.999)  
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen46Sc(radioactive_gen.RadioactiveGen):
+class Gen46Sc(cosmogenic_gen.CosmogenicGen):
     """ Scandium 46 background definition."""
     def __init__(self):
-        super(Gen46Sc, self).__init__("46Sc", 46, 0.23)
+        super(Gen46Sc, self).__init__("46Sc")
     def _generate(self):
         spectrum = decay_util.beta_gamma(0.3569, 2.0098, 0.999964)  
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen68Ga(radioactive_gen.RadioactiveGen):
+class Gen68Ga(cosmogenic_gen.CosmogenicGen):
     """ Gallium 68 background definition."""
     def __init__(self):
-        super(Gen68Ga, self).__init__("68Ga", 68, 0.00012867)
+        super(Gen68Ga, self).__init__("68Ga")
     def _generate(self):
         spectrum = decay_util.gamma(1.07734,0.0322)
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen26Al(radioactive_gen.RadioactiveGen):    
+class Gen26Al(cosmogenic_gen.CosmogenicGen):    
     """ Aluminium 26 background definition."""
     def __init__(self):
-        super(Gen26Al, self).__init__("26Al", 26, 7.166e5)
+        super(Gen26Al, self).__init__("26Al")
     def _generate(self):
         spectrum = decay_util.gamma(1.17342,0.8173)
         spectrum.SetName(self.get_name())
         return spectrum
         
 
-class Gen56Co(radioactive_gen.RadioactiveGen):  
+class Gen56Co(cosmogenic_gen.CosmogenicGen):  
     """ Cobalt 56 background definition."""
     def __init__(self):
-        super(Gen56Co, self).__init__("56Co", 56, 0.212)
+        super(Gen56Co, self).__init__("56Co")
     def _generate(self):
         spectrum = decay_util.gamma(0.84677, 0.999399)
         spectrum.Add(decay_util.gamma(0.977372, 0.01421))
@@ -142,20 +161,20 @@ class Gen56Co(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen58Co(radioactive_gen.RadioactiveGen):    
+class Gen58Co(cosmogenic_gen.CosmogenicGen):    
     """ Cobalt 58 background definition."""
     def __init__(self):
-        super(Gen58Co, self).__init__("58Co", 58, 0.194)
+        super(Gen58Co, self).__init__("58Co")
     def _generate(self):
         spectrum = decay_util.gamma(0.8107593, 0.9945)
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen42K(radioactive_gen.RadioactiveGen):
+class Gen42K(cosmogenic_gen.CosmogenicGen):
     """ Potassium 42 background definition."""
     def __init__(self):
-        super(Gen42K, self).__init__("42K", 42, 0.00141096)
+        super(Gen42K, self).__init__("42K")
     def _generate(self):
         spectrum = decay_util.beta_gamma(2.0008, 1.52465, 0.1764)
         spectrum.Add(decay_util.beta_gamma(3.5254, 0.0, 0.819))
@@ -163,20 +182,20 @@ class Gen42K(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen82Rb(radioactive_gen.RadioactiveGen):
+class Gen82Rb(cosmogenic_gen.CosmogenicGen):
     """ Rubidium 82 background definition."""
     def __init__(self):
-        super(Gen82Rb, self).__init__("82Rb", 82, 0.00000242)
+        super(Gen82Rb, self).__init__("82Rb")
     def _generate(self):
         spectrum = decay_util.gamma(0.77652, 0.1508)
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen84Rb(radioactive_gen.RadioactiveGen):
+class Gen84Rb(cosmogenic_gen.CosmogenicGen):
     """ Rubidium 84 background definition."""
     def __init__(self):
-        super(Gen84Rb, self).__init__("84Rb", 84, 0.089)
+        super(Gen84Rb, self).__init__("84Rb")
     def _generate(self):
         spectrum = decay_util.beta(0.896, 0.039)
         spectrum.Add(decay_util.gamma(0.8816041, 0.689 ))  
@@ -184,23 +203,35 @@ class Gen84Rb(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen90Y(radioactive_gen.RadioactiveGen):
-    """ Ytrium 90 background definition."""
+class Gen90Y(cosmogenic_gen.CosmogenicGen):
+    """ Yttrium 90 background definition."""
     def __init__(self):
-        super(Gen90Y, self).__init__("90Y", 90, 0.0073)
+        super(Gen90Y, self).__init__("90Y")
     def _generate(self):
         spectrum = decay_util.beta(2.2801, 0.999885) 
         spectrum.SetName(self.get_name())
         return spectrum
 
 
-class Gen102Rh(radioactive_gen.RadioactiveGen):   
+class Gen88Y(cosmogenic_gen.CosmogenicGen):
+    """ Yttrium 88 background definition."""
+    def __init__(self):
+        super(Gen88Y, self).__init__("88Y")
+    def _generate(self):
+        spectrum = decay_util.gamma(0.898042, 0.937) 
+        spectrum.Add(decay_util.gamma(1.836063, 0.992 ))  
+        spectrum.SetName(self.get_name())
+        return spectrum
+
+
+class Gen102Rh(cosmogenic_gen.CosmogenicGen):
     """ Rhodium 102 background definition."""
     def __init__(self):
-        super(Gen102Rh, self).__init__("102Rh", 102, 0.5679)
+        super(Gen102Rh, self).__init__("102Rh")
     def _generate(self):
-        spectrum = decay_util.beta(1.150, 0.2)
-        spectrum.Add(decay_util.beta_gamma(0.593, 0.557, 0.02)) 
+        spectrum = decay_util.beta(0.593, 0.02) 
+        spectrum.Add(decay_util.beta(1.150, 0.2)) 
+        spectrum.Add(decay_util.gamma(0.5566, 0.02))
         spectrum.Add(decay_util.gamma(0.46858, 0.029))
         spectrum.Add(decay_util.gamma(0.47506, 0.46))
         spectrum.Add(decay_util.gamma(0.62805, 0.045))
@@ -209,10 +240,10 @@ class Gen102Rh(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen102mRh(radioactive_gen.RadioactiveGen): 
+class Gen102mRh(cosmogenic_gen.CosmogenicGen): 
     """ Rhodium 102m background definition."""
     def __init__(self):
-        super(Gen102mRh, self).__init__("102mRh", 102, 2.9)
+        super(Gen102mRh, self).__init__("102mRh")
     def _generate(self):
         spectrum = decay_util.gamma(0.41525, 0.021)
         spectrum.Add(decay_util.gamma(0.41852, 0.094))
@@ -231,10 +262,10 @@ class Gen102mRh(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen106Rh(radioactive_gen.RadioactiveGen):
+class Gen106Rh(cosmogenic_gen.CosmogenicGen):
     """ Rhodium 106 background definition."""
     def __init__(self):
-        super(Gen106Rh, self).__init__("106Rh", 106, 0.00000094)
+        super(Gen106Rh, self).__init__("106Rh")
     def _generate(self):
         spectrum = decay_util.beta_gamma(1.979, 1.562, 0.0177)
         spectrum.Add(decay_util.beta_gamma(2.407, 1.134, 0.1))
@@ -244,12 +275,43 @@ class Gen106Rh(radioactive_gen.RadioactiveGen):
         return spectrum
 
 
-class Gen110mAg(radioactive_gen.RadioactiveGen):     
+class Gen110mAg(cosmogenic_gen.CosmogenicGen):     
     """ Argentum 110m background definition."""     
     def __init__(self):
-        super(Gen110mAg, self).__init__("110mAg", 110, 0.6845)
+        super(Gen110mAg, self).__init__("110mAg")
     def _generate(self):
         spectrum = decay_util.beta_gamma(0.083, 2.8092, 0.686)
         spectrum.Add(decay_util.beta_gamma(0.5306, 2.3623, 0.313))
+        spectrum.SetName(self.get_name())
+        return spectrum
+
+
+class Gen125I(cosmogenic_gen.CosmogenicGen):    
+    """ Iodine 125 background definition."""     
+    def __init__(self):
+        super(Gen125I, self).__init__("125I")
+    def _generate(self):
+        spectrum = decay_util.gamma(0.0354925, 0.0668)
+        spectrum.SetName(self.get_name())
+        return spectrum
+
+
+class Gen129I(cosmogenic_gen.CosmogenicGen):     
+    """ Iodine 129 background definition."""     
+    def __init__(self):
+        super(Gen129I, self).__init__("129I")
+    def _generate(self):
+        spectrum = decay_util.beta_gamma(0.154, 0.039578, 1.0)
+        spectrum.SetName(self.get_name())
+        return spectrum
+
+
+class Gen121mTe(cosmogenic_gen.CosmogenicGen):     
+    """ Tellurium 121m background definition."""     
+    def __init__(self):
+        super(Gen121mTe, self).__init__("121mTe")
+    def _generate(self):
+        spectrum = decay_util.gamma(1.102149, 0.025)
+        spectrum.Add(decay_util.gamma(0.212189, 0.815))
         spectrum.SetName(self.get_name())
         return spectrum
