@@ -13,12 +13,12 @@ import constants
 class CosmogenicGen(generator.Generator):
     """ Base class for generating radioactive decay spectra."""
     def __init__(self, name):
-        """ Initialise with an unique name."""
-        super(RadioactiveGen, self).__init__(name)
+        """ Initialise with an unique name."""      
+        super(CosmogenicGen, self).__init__(name)
     def generate(self, activity):
         """ Return a energy spectrum for this background/signal."""
         spectrum = self._generate()
-        spectrum.Scale(self._activity)
+        spectrum.Scale(activity)
         return spectrum
 ####################################################################################################
 # Functions to override

@@ -11,6 +11,7 @@ import math
 import constants
 
 class SolarGen(generator.Generator):
+
     """ Base class for generating solar spectra."""
     def __init__(self, name, events_per_Kt_year):
         """ Initialise with an unique name."""
