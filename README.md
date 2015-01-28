@@ -1,3 +1,5 @@
+# This is obsolete.
+
 ## SNO+py (snopy)
 Double beta limit setting software for SNO+ written in python.
 ### Usage
